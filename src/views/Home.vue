@@ -1,8 +1,9 @@
 <template>
   <div id="home">
-    <div class="flex flex-wrap ">
+    <div class="flex flex-wrap">
+      <div class="bg-dark-pink">smile</div>
       <div v-for="i in 10" :key="i" class="h-40 border w-1/2">
-        <div class="">lorem ipsum</div>
+        <div class>lorem ipsum</div>
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 # Tour De Pub
-PWA for building habits
+PWA for getting drunk in Aalborg pubs
 
 ## Project setup
 ```
