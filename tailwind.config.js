@@ -15,17 +15,16 @@ module.exports = {
     },
     extend: {
       colors: {
-        'dark-pink': '#E3506E',
-        blue: '#007ace',
-        red: '#de3618',
+        blue: '#538BED',
+        purple: '#875BE9',
       },
     },
     gradients: theme => ({
-      primary: [theme('blue'), theme('red')],
+      primary: [theme('colors.blue'), theme('colors.purple')],
     }),
   },
   variants: {
     gradients: ['responsive', 'hover'],
   },
-  plugins: [require('./plugins/gradients')],
+  plugins: [require('./plugins/gradient.js')],
 };

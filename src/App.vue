@@ -33,10 +33,10 @@ export default {
 };
 </script>
 
-<style lang="scss">
-@import '../node_modules/tailwindcss/dist/base.css';
-@import '../node_modules/tailwindcss/dist/components.css';
-@import '../node_modules/tailwindcss/dist/utilities.css';
+<style>
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,500,600,700&display=swap');
 
