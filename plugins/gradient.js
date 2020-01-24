@@ -6,7 +6,7 @@ module.exports = function({ addUtilities, e, theme, variants }) {
 
   const utilities = _.map(gradients, ([start, end], name) => ({
     [`.bg-gradient-${e(name)}`]: {
-      backgroundImage: `linear-gradient(to right, ${start}, ${end})`,
+      backgroundImage: `linear-gradient(135deg, ${start}, ${end})`,
     },
   }));
 

@@ -18,6 +18,13 @@ module.exports = {
         blue: '#538BED',
         purple: '#875BE9',
       },
+      boxShadow: {
+        top:
+          '0 4px 6px 6px rgba(0, 0, 0, .1), 0 2px 4px -1px rgba(0, 0, 0, .06)',
+      },
+      borderRadius: {
+        large: '30px',
+      },
     },
     gradients: theme => ({
       primary: [theme('colors.blue'), theme('colors.purple')],

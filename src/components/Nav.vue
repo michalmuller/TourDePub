@@ -1,19 +1,19 @@
 <template>
-  <div class="fixed z-10 bottom-0 w-full">
-    <div id="nav" class="bg-black flex justify-around">
-      <div class="">
+  <div class="fixed z-10 bottom-0 w-full shadow-top">
+    <div id="nav" class="bg-white flex justify-around items-center">
+      <div>
         <router-link to="/slider">
-          <img class="h-8 m-3" src="../../public/img/icons/home.svg" />
+          <img class="h-8 m-3" src="../../public/img/icons/question.svg" />
         </router-link>
       </div>
       <div>
         <router-link to="/">
-          <img class="h-8 m-3" src="../../public/img/icons/home.svg" />
+          <img class="h-10 m-3" src="../../public/img/icons/beer.svg" />
         </router-link>
       </div>
       <div>
         <router-link to="/profile">
-          <img class="h-8 m-3" src="../../public/img/icons/user.svg" />
+          <img class="h-8 m-3" src="../../public/img/icons/profile.svg" />
         </router-link>
       </div>
     </div>
@@ -21,15 +21,15 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations } from "vuex";
 export default {
-  name: 'Navigation',
+  name: "Navigation",
   methods: {},
   computed: {
     ...mapState({
-      user: state => state.user.user,
-    }),
-  },
+      user: state => state.user.user
+    })
+  }
 };
 </script>
 

@@ -4,6 +4,7 @@ import router from './router';
 import store from './store';
 import VueAwesomeSwiper from 'vue-awesome-swiper';
 import 'swiper/dist/css/swiper.css';
+import '@/assets/css/tailwind.css';
 
 Vue.use(VueAwesomeSwiper /* { default global options } */);
 
