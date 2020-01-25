@@ -8,18 +8,15 @@
         </swiper>
       </div>
     </div>-->
-    <camera></camera>
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from "vuex";
 import firebase from "firebase";
-import Camera from "@/components/Camera.vue";
 
 export default {
   name: "Slider",
-  components: { Camera },
   data() {
     return {
       swiperOption: {

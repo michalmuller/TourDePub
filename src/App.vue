@@ -17,14 +17,13 @@ import db from "@/firebase/firebaseInit";
 import firebase from "firebase";
 import Navbar from "@/components/Nav.vue";
 import Login from "@/views/Login.vue";
-import Camera from "@/components/Camera.vue";
 
 export default {
   name: "App",
   data() {
     return {};
   },
-  components: { Navbar, Login, Camera },
+  components: { Navbar, Login },
   methods: {
     log() {
       console.log("logged");

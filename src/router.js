@@ -4,6 +4,7 @@ import Home from './views/Home.vue';
 import Login from './views/Login.vue';
 import Slider from './views/Slider.vue';
 import Profile from './views/Profile.vue';
+import CameraView from '@/components/CameraView';
 
 Vue.use(Router);
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/profile',
       name: 'profile',
       component: Profile,
+    },
+    {
+      path: '/camera',
+      name: 'camera',
+      component: CameraView,
     },
   ],
 });
