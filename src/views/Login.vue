@@ -52,7 +52,7 @@
             {{ signUpToggle ? 'Already a member?' : 'Are you new?' }}
             <span
               @click="toggle"
-              class="font-bold text-blue-500"
+              class="font-bold text-blue"
             >{{ signUpToggle ? 'login' : 'sign up' }}</span>
           </p>
         </div>
@@ -66,6 +66,7 @@
 
 <script>
 import firebase from "firebase";
+import db from "@/firebase/firebaseInit";
 export default {
   name: "login",
   data() {
@@ -90,10 +91,9 @@ export default {
             displayName: res.user.displayName,
             uid: res.user.uid,
             email: res.user.email,
-            photoUrl: res.user.photoURL,
-            phoneNumber: res.user.phoneNumber
+            photoUrl: res.user.photoURL
           };
-          this.$store.commit("user/AUTH_USER", user);
+          this.$store.commit("state/AUTH_USER", user);
           this.$router.replace("/");
         })
         .catch(err => {
@@ -107,19 +107,34 @@ export default {
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(res => {
           var currentUser = firebase.auth().currentUser;
+
           currentUser
             .updateProfile({
               displayName: this.displayName
             })
             .then(() => {
+              db.collection("pubs")
+                .get()
+                .then(querySnapshot => {
+                  querySnapshot.forEach(doc => {
+                    db.collection("pubs")
+                      .doc(doc.id)
+                      .set(
+                        {
+                          [currentUser.uid]: 0
+                        },
+                        { merge: true }
+                      );
+                  });
+                })
+                .catch(err => console.log(err));
               var user = {
                 displayName: currentUser.displayName,
                 uid: currentUser.uid,
                 email: currentUser.email,
-                photoUrl: currentUser.photoURL,
-                phoneNumber: currentUser.phoneNumber
+                photoUrl: currentUser.photoURL
               };
-              this.$store.commit("user/AUTH_USER", user);
+              this.$store.commit("state/AUTH_USER", user);
             })
             .then(() => {
               this.$router.replace("home");

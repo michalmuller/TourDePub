@@ -37,11 +37,10 @@ export default {
       }
     };
   },
-  methods: {
-  },
+  methods: {},
   computed: {
     ...mapState({
-      user: state => state.user.user,
+      user: state => state.state.user
     }),
     swiper() {
       return this.$refs.swiper.swiper;
@@ -57,7 +56,7 @@ export default {
   background-color: rgba(255, 255, 255, 0.9);
   width: 90vw;
   height: 100vh;
-  color: black
+  color: black;
 }
 .swiper-slide-shadow-left {
   opacity: 0.1;

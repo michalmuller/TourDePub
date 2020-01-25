@@ -4,7 +4,6 @@ import Home from './views/Home.vue';
 import Login from './views/Login.vue';
 import Slider from './views/Slider.vue';
 import Profile from './views/Profile.vue';
-import Pub from './views/Pub.vue';
 
 Vue.use(Router);
 
@@ -36,12 +35,6 @@ export default new Router({
       path: '/profile',
       name: 'profile',
       component: Profile,
-    },
-    {
-      path: '/pub/:id',
-      name: 'pub',
-      props: true,
-      component: Pub,
     },
   ],
 });

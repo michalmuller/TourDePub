@@ -26,7 +26,7 @@ export default {
   components: { Navbar, Login },
   computed: {
     ...mapState({
-      user: state => state.user.user
+      user: state => state.state.user
     })
   }
 };

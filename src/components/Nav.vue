@@ -27,7 +27,7 @@ export default {
   methods: {},
   computed: {
     ...mapState({
-      user: state => state.user.user
+      user: state => state.state.user
     })
   }
 };

@@ -21,7 +21,7 @@
               class="text-lg font-bold text-gray-800 pt-3 truncate"
               style="max-width:88%"
             >{{pub.name}}</h1>
-            <p class="text-sm pt-2 text-gray-600">0 drinks</p>
+            <p class="text-sm pt-2 text-gray-600">{{pub[user.uid]}} drinks</p>
           </div>
           <div class="absolute h-full flex items-center" style="right:12px">
             <img src="../../public/img/icons/arrow_card.png" />
@@ -33,7 +33,7 @@
     <!----------- One Pub Screen ------------>
     <div v-if="pub" class="mt-8 relative z-20">
       <div class="px-6 py-3 w-20 z-30">
-        <div @click="pub=null" class="w-16">
+        <div @click="removePub" class="w-16">
           <img src="../../public/img/icons/arow_back.svg" class="w-8 h-8" alt />
         </div>
       </div>
@@ -48,14 +48,20 @@
         <div class="px-3 mt-5">
           <p class="text-gray-600 mb-2">Amount of alcohol</p>
           <div class="rounded flex w-full h-12 bg-light-blue justify-between">
-            <div class="bg-blue rounded-l flex justify-center items-center w-12 h-12">
+            <div
+              @click="beerUpdate(-1)"
+              class="bg-blue rounded-l flex justify-center items-center w-12 h-12"
+            >
               <img src="../../public/img/icons/minus.svg" />
             </div>
             <div class="flex justify-center items-center">
               <img src="../../public/img/icons/beer_color.svg" />
-              <span class="text-lg font-bold text-gray-800 ml-4">3 drinks</span>
+              <span class="text-lg font-bold text-gray-800 ml-4">{{pub[user.uid]}} drinks</span>
             </div>
-            <div class="bg-blue rounded-r flex justify-center items-center w-12 h-12">
+            <div
+              @click="beerUpdate(1)"
+              class="bg-blue rounded-r flex justify-center items-center w-12 h-12"
+            >
               <img src="../../public/img/icons/plus.svg" />
             </div>
           </div>
@@ -69,7 +75,6 @@
 // @ is an alias to /src
 import store from "../store";
 import { mapState, mapMutations } from "vuex";
-import user from "../modules/user";
 import state from "../modules/state";
 import firebase from "firebase";
 import db from "@/firebase/firebaseInit";
@@ -77,21 +82,28 @@ import db from "@/firebase/firebaseInit";
 export default {
   name: "home",
   data() {
-    return {
-      pub: null
-    };
+    return {};
   },
   methods: {
     getPub(pub) {
       var parsedPub = JSON.parse(JSON.stringify(pub));
-      this.pub = parsedPub;
-      console.log(parsedPub);
+      this.$store.commit("state/UPDATE_PUB", parsedPub);
+    },
+    removePub() {
+      this.$store.commit("state/REMOVE_PUB");
+    },
+    beerUpdate(val) {
+      this.$store.commit("state/UPDATE_BEER", val);
+      const increment = firebase.firestore.FieldValue.increment(val);
+      const dbRef = db.collection("pubs").doc(this.pub.id.toString());
+      dbRef.update({ [this.user.uid]: increment });
     }
   },
   computed: {
     ...mapState({
-      user: state => state.user.user,
+      user: state => state.state.user,
       pubs: state => state.state.pubs,
+      pub: state => state.state.pub,
       loading: state => state.state.loading
     })
   },
