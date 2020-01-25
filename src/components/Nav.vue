@@ -7,7 +7,7 @@
         </router-link>
       </div>
       <div>
-        <router-link to="/">
+        <router-link to="/" @click.native="displayPubs">
           <img class="h-10 m-3" src="../../public/img/icons/beer.svg" />
         </router-link>
       </div>
@@ -24,7 +24,11 @@
 import { mapState, mapMutations } from "vuex";
 export default {
   name: "Navigation",
-  methods: {},
+  methods: {
+    displayPubs() {
+      this.$store.commit("state/REMOVE_PUB");
+    }
+  },
   computed: {
     ...mapState({
       user: state => state.state.user
