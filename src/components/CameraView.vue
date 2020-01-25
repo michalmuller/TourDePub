@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import storage from "@/firebase/firebaseInit";
 import firebase from "firebase";
 
 export default {

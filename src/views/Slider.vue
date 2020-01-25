@@ -1,13 +1,13 @@
 <template>
   <div class="col-xs-12">
-    <!-- <div class="mt-2">
+    <div class="mt-2">
       <div class="swiper-inner">
         <swiper :options="swiperOption">
           <swiper-slide v-for="i in 5" :key="i">{{i}}</swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
       </div>
-    </div>-->
+    </div>
   </div>
 </template>
 
