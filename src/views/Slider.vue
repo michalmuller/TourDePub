@@ -1,21 +1,25 @@
 <template>
   <div class="col-xs-12">
-    <div style="margin-top:40px">
+    <!-- <div class="mt-2">
       <div class="swiper-inner">
         <swiper :options="swiperOption">
           <swiper-slide v-for="i in 5" :key="i">{{i}}</swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
       </div>
-    </div>
+    </div>-->
+    <camera></camera>
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from "vuex";
 import firebase from "firebase";
+import Camera from "@/components/Camera.vue";
+
 export default {
   name: "Slider",
+  components: { Camera },
   data() {
     return {
       swiperOption: {

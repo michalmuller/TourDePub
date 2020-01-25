@@ -1,0 +1,135 @@
+<template>
+  <div class="wrapper">
+    <video class="video" :class="activeDevice === 0 ? 'front' : ''" ref="video" />
+    <canvas style="display:none" ref="canva" />
+
+    <div class="photo-button-container">
+      <button
+        class="border border-white h-16 w-16 rounded-full flex align-center justify-center"
+        @click="TakePhoto"
+      >
+        <div class="bg-white rounded-full h-12 w-12"></div>
+      </button>
+    </div>
+    <photos-gallery class="gallery" :photos="photos" />
+  </div>
+</template>
+
+
+
+<script>
+import PhotosGallery from "./PhotosGallery.vue";
+export default {
+  components: {
+    PhotosGallery
+  },
+  data() {
+    return {
+      photos: [],
+      mediaStream: null,
+      videoDevices: [],
+      activeDevice: 0,
+      counter: 0
+    };
+  },
+  methods: {
+    async StartRecording(deviceIdx) {
+      let video = this.$refs.video;
+      this.mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: { deviceId: { exact: this.videoDevices[deviceIdx].deviceId } }
+      });
+      video.srcObject = this.mediaStream;
+      video.play();
+    },
+    async TakePhoto() {
+      let video = this.$refs.video;
+      let canva = this.$refs.canva;
+      let width = video.videoWidth;
+      let height = video.videoHeight;
+      canva.width = width;
+      canva.height = height;
+      let ctx = canva.getContext("2d");
+      ctx.save();
+      if (this.activeDevice === 0) {
+        ctx.scale(-1, 1);
+        ctx.drawImage(video, width * -1, 0, width, height);
+      } else {
+        ctx.drawImage(video, 0, 0);
+      }
+      ctx.restore();
+      this.photos.push({
+        id: this.counter++,
+        src: canva.toDataURL("image/png")
+      });
+    },
+    switchCamera() {
+      const tracks = this.mediaStream.getVideoTracks();
+      tracks.forEach(track => {
+        track.stop();
+      });
+      this.StartRecording((this.activeDevice + 1) % 2);
+      this.activeDevice = (this.activeDevice + 1) % 2;
+    }
+  },
+  async mounted() {
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    this.videoDevices = devices.filter(d => d.kind === "videoinput");
+    this.StartRecording(0);
+  }
+};
+</script>
+
+<style scoped>
+.video.front {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+.wrapper {
+  background-color: black;
+  display: grid;
+  width: 100vw;
+  height: calc(100vh - 64px);
+  grid-template-columns: [left] 90vw [bs] 5vw [es] 5vw [right];
+  grid-template-rows: [top] 5vh [bs] 5vh [es] 60vh [middle] 10vh [bottom] 20vh [end];
+  justify-items: center;
+  overflow: hidden;
+}
+.video {
+  height: 100%;
+  grid-column: left/right;
+  grid-row: top / bottom;
+  user-select: none;
+  max-width: unset;
+}
+.switch-button {
+  grid-column: bs / es;
+  grid-row: bs / es;
+  z-index: 5;
+  border-radius: 100%;
+  width: 6vh;
+  height: 6vh;
+  font-size: 2vh;
+}
+.photo-button-container {
+  grid-column: left / right;
+  grid-row: middle / bottom;
+  z-index: 5;
+  width: 100vw;
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+}
+.photo-button {
+  width: 10vh;
+  height: 10vh;
+  border-radius: 100%;
+}
+.photo-button {
+  font-size: 4vh;
+  color: black;
+}
+.gallery {
+  grid-column: left / right;
+  grid-row: bottom / end;
+}
+</style>

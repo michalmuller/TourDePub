@@ -8,12 +8,12 @@
     <!----------- Home Screen ------------>
     <div v-show="!pub" class="px-3" style="padding-top: 172px">
       <div v-show="loading">loading ...</div>
-      <div v-if="!loading">
+      <div v-if="!loading" class="my-3">
         <div
           v-for="(pub, index) in pubs"
           :key="index"
           @click="getPub(pub)"
-          class="bg-white rounded shadow-md w-full mt-3 flex relative"
+          class="bg-white rounded shadow-md w-full mb-3 flex relative"
         >
           <img :src="pub.img" :alt="pub.name" class="rounded-l h-20 w-20" />
           <div class="pl-3 truncate w-full">
@@ -40,7 +40,7 @@
       <div
         v-if="!loading"
         class="bg-white mx-3 mt-3 relative rounded-t-large"
-        style="min-height: calc(100vh - 160px)"
+        style="min-height: calc(100vh - 164px)"
       >
         <div class="py-4 flex text-lg font-bold text-gray-800 justify-center items-center">
           <img class="h-8 w-8 rounded-full mr-3" :src="pub.img" />

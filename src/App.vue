@@ -6,7 +6,7 @@
     <router-view v-if="user" />
     <div v-if="user">
       <navbar></navbar>
-      <div class="bg-transparent" style="height: 88px"></div>
+      <div class="bg-transparent" style="height: 64px"></div>
     </div>
   </div>
 </template>
@@ -17,13 +17,14 @@ import db from "@/firebase/firebaseInit";
 import firebase from "firebase";
 import Navbar from "@/components/Nav.vue";
 import Login from "@/views/Login.vue";
+import Camera from "@/components/Camera.vue";
 
 export default {
   name: "App",
   data() {
     return {};
   },
-  components: { Navbar, Login },
+  components: { Navbar, Login, Camera },
   methods: {
     log() {
       console.log("logged");
