@@ -1,10 +1,9 @@
 <template>
   <div id="app">
     <div v-if="!user">
-      no user
       <login></login>
     </div>
-    <router-view />
+    <router-view v-if="user" />
     <div v-if="user">
       <navbar></navbar>
       <div class="bg-transparent" style="height: 88px"></div>

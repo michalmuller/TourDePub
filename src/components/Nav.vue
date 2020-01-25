@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed z-10 bottom-0 w-full shadow-top">
+  <div class="fixed z-20 bottom-0 w-full shadow-top">
     <div id="nav" class="bg-white flex justify-around items-center">
       <div>
         <router-link to="/slider">
