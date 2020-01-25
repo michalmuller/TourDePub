@@ -94,7 +94,8 @@ export default {
             photoUrl: res.user.photoURL
           };
           this.$store.commit("state/AUTH_USER", user);
-          this.$router.replace("/");
+          this.$router.replace("home");
+          this.$parent.callPubs();
         })
         .catch(err => {
           console.log(err);
@@ -137,8 +138,11 @@ export default {
               this.$store.commit("state/AUTH_USER", user);
             })
             .then(() => {
+              this.$store.commit("state/LOADING", true);
               this.$router.replace("home");
-              this.$emit("loginReload");
+              setTimeout(() => {
+                this.$parent.callPubs();
+              }, 1800);
             })
             .catch(err => {
               console.log(err);

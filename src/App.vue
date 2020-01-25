@@ -24,10 +24,42 @@ export default {
     return {};
   },
   components: { Navbar, Login },
+  methods: {
+    log() {
+      console.log("logged");
+    },
+    callPubs() {
+      let pubs = [];
+      this.$store.commit("state/LOADING", true);
+      db.collection("pubs")
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            pubs.push(doc.data());
+          });
+          console.log("DB called");
+        })
+        .then(() => {
+          this.$store.commit("state/LOADING", false);
+          this.$store.commit("state/UPDATE_PUBS", pubs);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  },
   computed: {
     ...mapState({
-      user: state => state.state.user
+      user: state => state.state.user,
+      pubs: state => state.state.pubs,
+      pub: state => state.state.pub,
+      loading: state => state.state.loading
     })
+  },
+  created() {
+    if (this.loading) {
+      this.callPubs();
+    }
   }
 };
 </script>

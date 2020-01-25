@@ -12,14 +12,29 @@
       class="bg-blue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       @click="signOut"
     >Logout</button>
+    <div v-if="user.uid == 'zGsKOvJcxagf9Fnmfw7JErj76ao2'" class="mt-6">
+      <p class="mb-2">Delete user from pubs</p>
+      <input class="mb-3 w-full" type="text" v-model="firebaseUid" placeholder="RiiEpdGjcYq3gpd0F2" />
+      <button
+        class="bg-blue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="submit"
+        @click="deleteUser"
+      >Delete user</button>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from "vuex";
 import firebase from "firebase";
+import db from "@/firebase/firebaseInit";
 export default {
   name: "Profile",
+  data() {
+    return {
+      firebaseUid: ""
+    };
+  },
   methods: {
     signOut() {
       firebase
@@ -35,14 +50,24 @@ export default {
           console.log(err);
         });
     },
-    ...mapMutations("user", ["LOGOUT_USER"]),
+    deleteUser() {
+      this.pubs.map(pub => {
+        let dbRef = db.collection("pubs").doc(pub.id.toString());
+        let removeCurrentUserId = dbRef.update({
+          [this.firebaseUid]: firebase.firestore.FieldValue.delete()
+        });
+      });
+    },
     logout() {
-      this.LOGOUT_USER();
+      this.$store.commit("state/LOGOUT_USER");
     }
   },
   computed: {
     ...mapState({
-      user: state => state.state.user
+      user: state => state.state.user,
+      pubs: state => state.state.pubs,
+      pub: state => state.state.pub,
+      loading: state => state.state.loading
     })
   }
 };
