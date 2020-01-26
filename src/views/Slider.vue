@@ -3,7 +3,9 @@
     <div class="mt-2">
       <div class="swiper-inner">
         <swiper :options="swiperOption">
-          <swiper-slide v-for="i in 5" :key="i">{{i}}</swiper-slide>
+          <swiper-slide class="p-3 text-2xl" v-for="i in 5" :key="i">
+            slider{{ i }}</swiper-slide
+          >
           <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
       </div>
@@ -12,41 +14,41 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
-import firebase from "firebase";
+import { mapState, mapMutations } from 'vuex';
+import firebase from 'firebase';
 
 export default {
-  name: "Slider",
+  name: 'Slider',
   data() {
     return {
       swiperOption: {
-        effect: "coverflow",
+        effect: 'coverflow',
         loop: true,
         grabCursor: true,
         centeredSlides: true,
-        slidesPerView: "auto",
+        slidesPerView: 'auto',
         coverflowEffect: {
           rotate: -10,
           stretch: 0,
           depth: 100,
           modifier: 1,
-          slideShadows: false
+          slideShadows: false,
         },
         pagination: {
-          el: ".swiper-pagination"
-        }
-      }
+          el: '.swiper-pagination',
+        },
+      },
     };
   },
   methods: {},
   computed: {
     ...mapState({
-      user: state => state.state.user
+      user: state => state.state.user,
     }),
     swiper() {
       return this.$refs.swiper.swiper;
-    }
-  }
+    },
+  },
 };
 </script>
 

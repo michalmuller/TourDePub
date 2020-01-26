@@ -1,18 +1,21 @@
 <template>
   <div class="camera-modal">
-    <video ref="video" class="camera-stream" controls="true" autoplay loop playsinline />
-    <div @click="capture" class="camera-modal-container h-16 w-16 bg-black rounded-full"></div>
+    <video ref="video" class="camera-stream" autoplay loop playsinline />
+    <div
+      @click="capture"
+      class="camera-modal-container h-16 w-16 bg-black rounded-full"
+    ></div>
   </div>
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from 'firebase';
 
 export default {
-  name: "CameraView",
+  name: 'CameraView',
   data() {
     return {
-      mediaStream: null
+      mediaStream: null,
     };
   },
   methods: {
@@ -29,7 +32,7 @@ export default {
           });
         this.$router.go(-1);
       });
-    }
+    },
   },
   mounted() {
     navigator.mediaDevices
@@ -39,12 +42,12 @@ export default {
         this.$refs.video.srcObject = mediaStream;
         this.$refs.video.play();
       })
-      .catch(error => console.error("getUserMedia() error:", error));
+      .catch(error => console.error('getUserMedia() error:', error));
   },
   destroyed() {
     const tracks = this.mediaStream.getTracks();
     tracks.map(track => track.stop());
-  }
+  },
 };
 </script>
 
