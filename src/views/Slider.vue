@@ -5,6 +5,11 @@
         <swiper :options="swiperOption">
           <swiper-slide v-for="i in 5" :key="i">
             <p class="p-3 text-2xl">slider{{ i }}</p>
+            <form method="post" action="/" enctype="multipart/form-data">
+              <input type="text" name="thetext" />
+              <input type="file" name="thefile" />
+              <button>Submit</button>
+            </form>
           </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
         </swiper>

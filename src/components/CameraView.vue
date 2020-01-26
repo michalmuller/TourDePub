@@ -1,10 +1,24 @@
 <template>
   <div class="camera-modal">
-    <video ref="video" class="camera-stream" autoplay loop playsinline />
+    <video
+      ref="video"
+      class="camera-stream"
+      autoplay
+      loop
+      playsinline
+      crossorigin
+    />
     <div
       @click="capture"
       class="camera-modal-container h-16 w-16 bg-black rounded-full"
     ></div>
+    <button
+      class="bg-blue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      @click="canvasPicture"
+    >
+      make a canvas snapshot
+    </button>
+    <canvas class="border" ref="canvas"></canvas>
   </div>
 </template>
 
@@ -32,6 +46,16 @@ export default {
           });
         this.$router.go(-1);
       });
+    },
+    canvasPicture() {
+      const video = this.$refs.video;
+      const canvas = (window.canvas = this.$refs.canvas);
+      canvas.width = video.videoWidth / 3;
+      canvas.height = video.videoHeight / 3;
+      canvas
+        .getContext('2d')
+        .drawImage(video, 0, 0, canvas.width, canvas.height);
+      console.log(canvas);
     },
   },
   mounted() {
