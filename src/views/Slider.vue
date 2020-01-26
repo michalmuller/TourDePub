@@ -3,9 +3,9 @@
     <div class="mt-2">
       <div class="swiper-inner">
         <swiper :options="swiperOption">
-          <swiper-slide class="p-3 text-2xl" v-for="i in 5" :key="i">
-            slider{{ i }}</swiper-slide
-          >
+          <swiper-slide v-for="i in 5" :key="i">
+            <p class="p-3 text-2xl">slider{{ i }}</p>
+          </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
       </div>
