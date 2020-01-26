@@ -1,6 +1,6 @@
 <template>
   <div class="camera-modal">
-    <video ref="video" class="camera-stream" />
+    <video ref="video" class="camera-stream" controls="true" autoplay loop playsinline />
     <div @click="capture" class="camera-modal-container h-16 w-16 bg-black rounded-full"></div>
   </div>
 </template>

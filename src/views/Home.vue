@@ -100,7 +100,7 @@ export default {
       this.$store.commit("state/UPDATE_PUB", parsedPub);
       setTimeout(() => {
         this.getAllBeers();
-      }, 400);
+      }, 640);
     },
     removePub() {
       this.$store.commit("state/REMOVE_PUB");
@@ -112,7 +112,7 @@ export default {
       dbRef.update({ [this.user.uid]: increment });
       setTimeout(() => {
         this.getAllBeers();
-      }, 400);
+      }, 640);
     },
 
     getAllBeers() {
