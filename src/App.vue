@@ -46,6 +46,13 @@ export default {
         .catch(err => {
           console.log(err);
         });
+      db.collection("users")
+        .doc(this.user.uid)
+        .get()
+        .then(doc => {
+          console.log(doc.data());
+          this.$store.commit("state/MERGE_USERS", doc.data());
+        });
     }
   },
   computed: {

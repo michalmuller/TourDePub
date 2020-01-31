@@ -8,11 +8,15 @@
       Email:
       <span class="font-bold">{{ user.email }}</span>
     </h1>
+    <h1 class="mb-3" v-if="user">
+      Drinks:
+      <span class="font-bold">{{ user.beer_total }}</span>
+    </h1>
     <button
       class="bg-blue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       @click="signOut"
     >Logout</button>
-    <div v-if="user.uid == 'zGsKOvJcxagf9Fnmfw7JErj76ao2'" class="mt-6">
+    <div class="mt-6">
       <p class="mb-2">Delete user from pubs</p>
       <input class="mb-3 w-full" type="text" v-model="firebaseUid" placeholder="RiiEpdGjcYq3gpd0F2" />
       <button
@@ -53,9 +57,11 @@ export default {
     deleteUser() {
       this.pubs.map(pub => {
         let dbRef = db.collection("pubs").doc(pub.id.toString());
-        let removeCurrentUserId = dbRef.update({
-          [this.firebaseUid]: firebase.firestore.FieldValue.delete()
-        });
+        let removeCurrentUserId = dbRef
+          .update({
+            [this.firebaseUid]: firebase.firestore.FieldValue.delete()
+          })
+          .then(() => console.log("user deleted"));
       });
     },
     logout() {

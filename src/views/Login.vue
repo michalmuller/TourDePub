@@ -138,6 +138,16 @@ export default {
               this.$store.commit("state/AUTH_USER", user);
             })
             .then(() => {
+              db.collection("users")
+                .doc(currentUser.uid)
+                .set({
+                  beer_total: 0,
+                  role: "user",
+                  displayName: currentUser.displayName,
+                  photoUrl: currentUser.photoURL
+                });
+            })
+            .then(() => {
               this.$store.commit("state/LOADING", true);
               this.$router.replace("home");
               setTimeout(() => {

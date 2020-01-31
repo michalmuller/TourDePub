@@ -10,8 +10,13 @@ const mutations = {
     state.user = payload;
   },
 
+  MERGE_USERS: (state, payload) => {
+    state.user = { ...state.user, ...payload }
+  },
+
   LOGOUT_USER: state => {
     state.user = null;
+    state.pub = null;
   },
 
   LOADING: (state, payload) => {
@@ -33,6 +38,8 @@ const mutations = {
   UPDATE_BEER: (state, payload) => {
     state.pub[state.user.uid] += payload;
     state.pubs[state.pub.id - 1][state.user.uid] += payload;
+    state.pub.beer_total += payload;
+    state.user.beer_total += payload;
   },
 };
 
