@@ -1,12 +1,16 @@
 <template>
   <div id="home">
-    <div id="header" class="h-24 w-full bg-gradient-primary z-10 top-0 fixed shadow-md">
+    <div
+      id="header"
+      style="height:6.5rem"
+      class="w-full bg-gradient-primary z-10 top-0 fixed shadow-md"
+    >
       <img src="../../public/img/circle_overlay.png" class="absolute" style="width:42%" />
-      <h1 v-show="!pub" class="pt-8 relative px-6 text-2xl font-bold text-white">JBC Tour De Pub</h1>
+      <h1 v-show="!pub" class="pt-6 relative px-6 text-2xl font-bold text-white">JBC Tour De Pub</h1>
     </div>
 
     <!----------- Home Screen ------------>
-    <div v-show="!pub" class="px-3" style="padding-top: 100px">
+    <div v-show="!pub" class="px-3" style="padding-top: 106px">
       <div v-show="loading">loading ...</div>
       <div v-if="!loading" class="my-3">
         <div
@@ -164,11 +168,20 @@ export default {
           this.percentage = 0;
           storageRef.getDownloadURL().then(url => {
             console.log(url);
-            db.collection("pubs")
-              .doc(this.pub.id.toString())
-              .update({
-                images: firebase.firestore.FieldValue.arrayUnion(url)
-              })
+            this.$store.commit("state/UPDATE_IMAGES", 1);
+            const batch = db.batch();
+            const increment = firebase.firestore.FieldValue.increment(1);
+            const pubRef = db.collection("pubs").doc(this.pub.id.toString());
+            const userRef = db
+              .collection("users")
+              .doc(this.user.uid.toString());
+            batch.update(pubRef, {
+              images: firebase.firestore.FieldValue.arrayUnion(url)
+            });
+
+            batch.update(userRef, { img_total: increment });
+            batch
+              .commit()
               .then(() => {
                 this.$parent.callPubs();
               })

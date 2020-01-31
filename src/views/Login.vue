@@ -142,6 +142,7 @@ export default {
                 .doc(currentUser.uid)
                 .set({
                   beer_total: 0,
+                  img_total: 0,
                   role: "user",
                   displayName: currentUser.displayName,
                   photoUrl: currentUser.photoURL

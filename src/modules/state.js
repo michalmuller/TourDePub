@@ -41,6 +41,9 @@ const mutations = {
     state.pub.beer_total += payload;
     state.user.beer_total += payload;
   },
+  UPDATE_IMAGES: (state, payload) => {
+    state.user.img_total += payload;
+  }
 };
 
 export default { state, mutations, namespaced: true };
