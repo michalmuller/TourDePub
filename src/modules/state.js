@@ -3,6 +3,7 @@ const state = {
   pubs: [],
   pub: null,
   user: null,
+  users: null,
 };
 
 const mutations = {
@@ -43,6 +44,10 @@ const mutations = {
   },
   UPDATE_IMAGES: (state, payload) => {
     state.user.img_total += payload;
+  },
+
+  UPDATE_USERS: (state, payload) => {
+    state.users = payload;
   }
 };
 

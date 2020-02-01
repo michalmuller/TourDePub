@@ -23,7 +23,7 @@
           <div class="pl-3 truncate w-full">
             <h1
               class="text-lg font-bold text-gray-800 pt-3 truncate"
-              style="max-width:88%"
+              style="max-width:95%"
             >{{ pub.name }}</h1>
             <div class="flex">
               <div v-if=" pub[user.uid] > 0" class="text-lg text-gray-600 flex items-center mr-6">
@@ -35,9 +35,6 @@
                 <img class="h-6 w-6" src="../../public/img/icons/img.svg" alt />
               </div>
             </div>
-          </div>
-          <div class="absolute h-full flex items-center" style="right:12px">
-            <img src="../../public/img/icons/arrow_card.svg" />
           </div>
         </div>
       </div>
@@ -103,10 +100,15 @@
             </div>
           </div>
 
-          <div class="px-3 mt-6" v-if="pub.images && pub.images.length > 0">
+          <div class="px-3 mt-6">
             <p class="text-gray-600 mb-2">Gallery</p>
-            <p v-if="imgReload">It's reloading, have a beer ...</p>
-            <div v-if="!imgReload" class="flex flex-wrap">
+            <p v-if="imgReload">loading, have a beer ...</p>
+            <p
+              v-if="!pub.images"
+              v-cloak
+              class="text-sm"
+            >Add photos to gallery by clicking camera icon in the top</p>
+            <div v-if="!imgReload && pub.images && pub.images.length > 0" class="flex flex-wrap">
               <div
                 v-for="(img, index) in pub.images"
                 :key="index"

@@ -145,7 +145,8 @@ export default {
                   img_total: 0,
                   role: "user",
                   displayName: currentUser.displayName,
-                  photoUrl: currentUser.photoURL
+                  photoUrl:
+                    "https://firebasestorage.googleapis.com/v0/b/jbctourdepub.appspot.com/o/avatars%2Favatar_empty.svg?alt=media&token=f08288be-a117-480a-804c-323fa83c1417"
                 });
             })
             .then(() => {

@@ -9,60 +9,94 @@
     </div>
 
     <div class="w-full top-0 fixed z-20">
-      <div class="px-6 py-3 mt-1 w-full z-30 flex justify-between">
+      <div class="px-3 pb-2 mt-6 w-full z-30 flex justify-between">
         <div class="w-16">
           <h1 class="pl-3 text-2xl font-bold text-white">Profile</h1>
         </div>
-        <div class="w-12">
-          <img src="../../public/img/icons/gear.svg" class="mt-1 ml-3 w-7 h-7" />
+        <div class="w-12 relative">
+          <img
+            @click="options = !options"
+            src="../../public/img/icons/gear.svg"
+            class="mt-1 ml-3 w-7 h-7"
+          />
+          <div
+            v-if="options"
+            class="bg-white absolute z-30 rounded shadow-md px-5 py-3"
+            style="right:0.75rem; top:2.3rem"
+          >
+            <p class="text-gray-600 text-xs mb-2">options</p>
+            <button
+              class="bg-blue text-white text-sm font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              @click="signOut"
+            >Logout</button>
+          </div>
         </div>
       </div>
       <div
         v-if="!loading"
-        class="bg-white mx-3 mt-1 relative rounded-t-large"
+        class="bg-white mx-3 relative rounded-t-large shadow-md"
         style="min-height: calc(100vh - 100px)"
       >
         <div>
-          <div class="mb-3 py-4 flex justify-center items-center text-center w-full" v-if="user">
-            <img :src="user.photoUrl" class="h-10 w-10 rounded-full mr-3 objet-cover" />
+          <div class="py-3 flex justify-center items-center text-center w-full" v-if="user">
+            <img :src="user.photoUrl" class="h-8 w-8 rounded-full mr-3 object-cover" />
             <span class="text-2xl font-bold text-gray-800 font-bold">{{ user.displayName }}</span>
           </div>
-          <div class="px-3 mt-5">
-            <p class="text-gray-600 mb-2">Your contribution</p>
-            <div class="rounded flex w-full h-12 bg-light-blue">
-              <div class="flex items-center ml-3">
-                <img class="w-3" src="../../public/img/icons/beer_color.svg" />
-                <span class="text-lg font-bold text-gray-800 ml-2">{{user.beer_total}} drinks</span>
-              </div>
+          <div class="overflow-scroll pb-4" style="height: calc(100vh - 200px) !important">
+            <div class="px-3 mt-5">
+              <p class="text-gray-600 mb-2">Your contribution</p>
+              <div class="rounded flex w-full h-12 bg-light-blue">
+                <div class="flex items-center ml-3">
+                  <img class="w-3" src="../../public/img/icons/beer_color.svg" />
+                  <span class="text-lg font-bold text-gray-800 ml-2">{{user.beer_total}} drinks</span>
+                </div>
 
-              <div class="flex items-center ml-6">
-                <img class="w-6" src="../../public/img/icons/img_dark.svg" />
-                <span class="text-lg font-bold text-gray-800 ml-2">{{user.img_total}} photos</span>
+                <div class="flex items-center ml-6">
+                  <img class="w-6" src="../../public/img/icons/img_dark.svg" />
+                  <span class="text-lg font-bold text-gray-800 ml-2">{{user.img_total}} photos</span>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="px-3 mt-5">
-            <p class="text-gray-600 mb-2">Leaderboard</p>
+            <div class="px-3 mt-6">
+              <p class="text-gray-600 mb-2">Leaderboard</p>
+              <div
+                v-for="(u, i) in users"
+                :key="i"
+                class="rounded flex w-full h-12 bg-light-blue items-center justify-between mb-1"
+              >
+                <div class="flex">
+                  <span class="text-gray-500 font-bold text-xl mx-3 w-3">{{i+1}}</span>
+                  <img class="rounded-full object-cover w-8 h-8 mr-2" :src="u.photoUrl" />
+                  <span class="text-gray-800 font-bold text-xl">{{u.displayName}}</span>
+                </div>
+                <div class="flex mr-3">
+                  <span class="text-gray-800 font-bold text-xl mr-2">{{u.beer_total}}</span>
+                  <img class="w-3" src="../../public/img/icons/beer_color.svg" />
+                </div>
+              </div>
+            </div>
+
+            <div class="px-3 mt-6">
+              <p class="text-gray-600 mb-2">Another section</p>
+            </div>
+
+            <div class="px-3 mt-6" v-if="user.role == 'admin'">
+              <p class="text-gray-600 mb-2">Admin</p>
+              <p class="mb-2">Delete user from pubs</p>
+              <input
+                class="mb-3 w-full border rounded"
+                type="text"
+                v-model="firebaseUid"
+                placeholder="RiiEpdGjcYq3gpd0F2"
+              />
+              <button
+                class="bg-blue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit"
+                @click="deleteUser"
+              >Delete user</button>
+            </div>
           </div>
-          <!-- <button
-            class="bg-blue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            @click="signOut"
-          >Logout</button>-->
-          <!-- <div class="mt-6 px-3">
-            <p class="mb-2">Delete user from pubs</p>
-            <input
-              class="mb-3 w-full border rounded"
-              type="text"
-              v-model="firebaseUid"
-              placeholder="RiiEpdGjcYq3gpd0F2"
-            />
-            <button
-              class="bg-blue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-              @click="deleteUser"
-            >Delete user</button>
-          </div>-->
         </div>
       </div>
     </div>
@@ -77,7 +111,8 @@ export default {
   name: "Profile",
   data() {
     return {
-      firebaseUid: ""
+      firebaseUid: "",
+      options: false
     };
   },
   methods: {
@@ -112,10 +147,32 @@ export default {
   computed: {
     ...mapState({
       user: state => state.state.user,
+      users: state => state.state.users,
       pubs: state => state.state.pubs,
       pub: state => state.state.pub,
       loading: state => state.state.loading
     })
+  },
+  created() {
+    let users = [];
+    this.$store.commit("state/LOADING", true);
+    const userRef = db.collection("users");
+    userRef
+      .orderBy("beer_total", "desc")
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          users.push(doc.data());
+        });
+        console.log("DB called for users");
+      })
+      .then(() => {
+        this.$store.commit("state/LOADING", false);
+        this.$store.commit("state/UPDATE_USERS", users);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 };
 </script>
