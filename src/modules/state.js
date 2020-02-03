@@ -48,6 +48,11 @@ const mutations = {
 
   UPDATE_USERS: (state, payload) => {
     state.users = payload;
+  },
+
+  CHANGE_AVATAR: (state, payload) => {
+    state.user.photoUrl = payload.url;
+    state.users[payload.i].photoUrl = payload.url;
   }
 };
 

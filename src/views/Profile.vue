@@ -37,10 +37,32 @@
         class="bg-white mx-3 relative rounded-t-large shadow-md"
         style="min-height: calc(100vh - 100px)"
       >
-        <div>
+        <div class="relative">
           <div class="py-3 flex justify-center items-center text-center w-full" v-if="user">
-            <img :src="user.photoUrl" class="h-8 w-8 rounded-full mr-3 object-cover" />
+            <img
+              :src="user.photoUrl"
+              class="h-8 w-8 rounded-full mr-3 object-cover"
+              @click="showAvatars = !showAvatars"
+            />
             <span class="text-2xl font-bold text-gray-800 font-bold">{{ user.displayName }}</span>
+          </div>
+          <div v-if="showAvatars" class="mx-3 bg-white py-3 rounded shadow-around absolute">
+            <div class="flex justify-between items-center px-3">
+              <p class="text-lg font-medium text-gray-600">Choose an avatar</p>
+              <div class="p-3" @click="showAvatars = !showAvatars">
+                <img src="../../public/img/icons/cross.svg" />
+              </div>
+            </div>
+            <div v-if="avatars" class="flex flex-wrap px-3 pt-2">
+              <div
+                class="border-2 border-white w-1/4"
+                v-for="(avatar, index) in avatars"
+                :key="index"
+                @click="changeAvatar(avatar)"
+              >
+                <img class="object-cover w-full" :src="avatar" alt />
+              </div>
+            </div>
           </div>
           <div class="overflow-scroll pb-4" style="height: calc(100vh - 200px) !important">
             <div class="px-3 mt-5">
@@ -112,7 +134,9 @@ export default {
   data() {
     return {
       firebaseUid: "",
-      options: false
+      options: false,
+      avatars: null,
+      showAvatars: false
     };
   },
   methods: {
@@ -139,6 +163,25 @@ export default {
           })
           .then(() => console.log("user deleted"));
       });
+    },
+    changeAvatar(avatar) {
+      let index = this.users.findIndex(
+        u => u.displayName === this.user.displayName
+      );
+      this.$store.commit("state/CHANGE_AVATAR", { url: avatar, i: index });
+      db.collection("users")
+        .doc(this.user.uid.toString())
+        .set(
+          {
+            photoUrl: avatar
+          },
+          { merge: true }
+        )
+        .then(() => {
+          this.showAvatars = false;
+          console.log("avatar changed");
+        })
+        .catch(err => console.log(err));
     },
     logout() {
       this.$store.commit("state/LOGOUT_USER");
@@ -173,6 +216,11 @@ export default {
       .catch(err => {
         console.log(err);
       });
+
+    let avatarRef = db.collection("avatars").doc("images");
+    avatarRef.get().then(doc => {
+      this.avatars = doc.data().avatars;
+    });
   }
 };
 </script>
