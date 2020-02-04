@@ -161,8 +161,13 @@ export default {
           .update({
             [this.firebaseUid]: firebase.firestore.FieldValue.delete()
           })
-          .then(() => console.log("user deleted"));
+          .then(() => console.log("user deleted from pubs"));
       });
+      db.collection("users")
+        .doc(this.firebaseUid.toString())
+        .delete()
+        .then(() => console.log("user deleted"))
+        .catch(err => console.log(err));
     },
     changeAvatar(avatar) {
       let index = this.users.findIndex(
