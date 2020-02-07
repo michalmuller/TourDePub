@@ -41,6 +41,9 @@
                 >Submit</button>
               </div>
             </div>
+            <div class="px-3 pt-5 text-gray-800" v-if="quizesFinished">
+              <p>You finished all quizes, go and buy Mike a beer</p>
+            </div>
           </swiper-slide>
 
           <swiper-slide class="rounded-t-large shadow-md">
@@ -87,7 +90,9 @@ export default {
   name: "Slider",
   data() {
     return {
-      quizes: null,
+      quizesFinished: false,
+      answeredQuizes: [],
+      quizes: [],
       quiz: null,
       activeIndex: "",
       swiperOption: {
@@ -110,10 +115,27 @@ export default {
     selectAnswer(a, i) {
       this.activeIndex = i;
     },
+    newQuiz() {
+      //filter out answered questions
+      this.quizes = this.quizes.filter(
+        val => !this.answeredQuizes.includes(val)
+      );
+      this.activeIndex = "";
+      if (this.quizes.length === 0) {
+        this.quiz = null;
+        this.quizesFinished = true;
+      } else {
+        this.quiz = this.quizes[Math.floor(Math.random() * this.quizes.length)];
+      }
+    },
     submitAnswer() {
       const modal = this.$refs.modal;
       const modalRight = this.$refs.modalRight;
       const modalWrong = this.$refs.modalWrong;
+
+      this.answeredQuizes.indexOf(this.quiz) === -1
+        ? this.answeredQuizes.push(this.quiz)
+        : console.log("This item already exists");
 
       if (this.quiz.answers[this.activeIndex].correct) {
         modal.classList.remove("modal");
@@ -121,6 +143,7 @@ export default {
         setTimeout(() => {
           modal.classList.add("modal");
           modalRight.classList.add("modal-box");
+          this.newQuiz();
         }, 1600);
       } else {
         modal.classList.remove("modal");
@@ -128,6 +151,7 @@ export default {
         setTimeout(() => {
           modal.classList.add("modal");
           modalWrong.classList.add("modal-box");
+          this.newQuiz();
         }, 1600);
       }
     }

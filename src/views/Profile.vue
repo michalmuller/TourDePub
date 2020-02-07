@@ -104,7 +104,7 @@
                 </div>
                 <div
                   v-if="showUserIndex == i"
-                  class="flex justify-end mx-3 pb-1 pt-1 border-t border-white"
+                  class="flex justify-end mx-3 py-2 border-t border-white"
                 >
                   <div class="flex items-center mr-6">
                     <span class="text-gray-800 font-bold text-xl mr-2">{{u.img_total}}</span>
