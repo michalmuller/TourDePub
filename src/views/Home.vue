@@ -26,13 +26,13 @@
               style="max-width:95%"
             >{{ pub.name }}</h1>
             <div class="flex">
-              <div v-if=" pub[user.uid] > 0" class="text-lg text-gray-600 flex items-center mr-6">
-                <span class="mt-2">{{ pub[user.uid] }}</span>
+              <div v-if=" pub.beer_total> 0" class="text-lg text-gray-600 flex items-center mr-6">
+                <span class="mt-2">{{ pub.beer_total }}</span>
                 <img class="h-6 w-6" src="../../public/img/icons/beer_color.svg" alt />
               </div>
               <div v-if="pub.images" class="text-lg text-gray-600 flex items-end">
                 <span class="mt-2 mr-2">{{ pub.images.length }}</span>
-                <img class="h-6 w-6" src="../../public/img/icons/img.svg" alt />
+                <img class="h-6 w-6 pb-1" src="../../public/img/icons/img.svg" alt />
               </div>
             </div>
           </div>
@@ -72,10 +72,21 @@
           <span>{{ pub.name }}</span>
         </div>
         <div class="overflow-scroll pb-4" style="height: calc(100vh - 200px) !important">
-          <!-- <div class="px-3 mt-5">
-            <span class="text-md text-gray-600">{{ pub.beer_total }} Total drinks</span>
-          </div>-->
           <div class="px-3 mt-5">
+            <span class="text-md text-gray-600">Total for JBC Team</span>
+            <div class="rounded flex w-full h-12 bg-light-blue mt-2">
+              <div class="flex items-center ml-3">
+                <img class="w-3" src="../../public/img/icons/beer_color_bg_blue.svg" />
+                <span class="text-lg font-bold text-gray-800 ml-2">{{ pub.beer_total }} drinks</span>
+              </div>
+
+              <div class="flex items-center ml-6">
+                <img class="w-6" src="../../public/img/icons/img.svg" />
+                <span class="text-lg font-bold text-gray-800 ml-2">{{ pub.images.length }} photos</span>
+              </div>
+            </div>
+          </div>
+          <div class="px-3 mt-6">
             <p class="text-gray-600 mb-2">Your contribution</p>
             <div class="rounded flex w-full h-12 bg-light-blue justify-between">
               <div

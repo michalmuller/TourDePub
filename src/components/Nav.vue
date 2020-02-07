@@ -4,21 +4,21 @@
       <div>
         <router-link to="/slider" class="flex items-center">
           <div class="w-12 h-12 flex items-center justify-center">
-            <img class="h-8 nav-icon" src="../../public/img/icons/question.svg" />
+            <img class="h-7 nav-icon" src="../../public/img/icons/question.svg" />
           </div>
         </router-link>
       </div>
       <div>
         <router-link to="/" @click.native="displayPubs" class="flex items-center">
           <div class="w-12 h-12 flex items-center justify-center">
-            <img class="h-10 nav-icon" src="../../public/img/icons/beer.svg" />
+            <img class="h-8 nav-icon" src="../../public/img/icons/beer.svg" />
           </div>
         </router-link>
       </div>
       <div>
         <router-link to="/profile" class="flex items-center">
           <div class="w-12 h-12 flex items-center justify-center">
-            <img class="h-8 nav-icon" src="../../public/img/icons/profile.svg" />
+            <img class="h-7 nav-icon" src="../../public/img/icons/profile.svg" />
           </div>
         </router-link>
       </div>

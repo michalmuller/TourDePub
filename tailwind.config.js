@@ -20,7 +20,14 @@ module.exports = {
         red: '#E46B5B',
         green: '#79BF60',
         'light-blue': '#EDF2F8',
+        'medium-blue': '#D8E2FF',
         'black-transparent': 'rgba(0,0,0,0.75)'
+      },
+      height: {
+        '7': '1.75rem'
+      },
+      width: {
+        '7': '1.75rem'
       },
       boxShadow: {
         top:
