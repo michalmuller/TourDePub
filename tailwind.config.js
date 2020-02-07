@@ -17,7 +17,10 @@ module.exports = {
       colors: {
         blue: '#567BDE',
         purple: '#7D56DB',
+        red: '#E46B5B',
+        green: '#79BF60',
         'light-blue': '#EDF2F8',
+        'black-transparent': 'rgba(0,0,0,0.75)'
       },
       boxShadow: {
         top:

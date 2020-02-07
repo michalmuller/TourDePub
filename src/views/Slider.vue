@@ -13,7 +13,11 @@
             <div class="relative">
               <p class="p-3 text-gray-800 font-bold text-center text-2xl">Quiz</p>
             </div>
-            <div class="overflow-scroll pb-6" style="height: calc(100vh - 200px) !important">
+            <div
+              v-if="!loading && quiz"
+              class="overflow-scroll pb-6"
+              style="height: calc(100vh - 200px) !important"
+            >
               <div class="px-3">
                 <p
                   style="width:90%"
@@ -50,43 +54,42 @@
       </div>
     </div>
     <div
-      class="absolute opacity-50 bg-black top-0"
+      ref="modal"
+      class="absolute bg-black-transparent modal top-0 flex justify-center items-center"
       style="height:102vh; width:100vw; z-index:1000"
-    >sa</div>
+    >
+      <div
+        ref="modalWrong"
+        class="bg-red absolute pb-6 pt-10 flex flex-col justify-center w-4/5 rounded shadow-lg modal-box"
+      >
+        <img class="flip" src="../../public/img/icons/thumb.svg" />
+        <p class="text-center mt-6 text-white text-lg">Sooo wrong!</p>
+        <p class="text-2xl text-center font-semibold text-white">-30 points</p>
+      </div>
+
+      <div
+        ref="modalRight"
+        class="bg-green absolute pb-6 pt-10 flex flex-col justify-center w-4/5 rounded shadow-lg modal-box"
+      >
+        <img src="../../public/img/icons/thumb.svg" />
+        <p class="text-center mt-6 text-white text-lg">Fuck Yeah!</p>
+        <p class="text-2xl text-center font-semibold text-white">+10 points</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from "vuex";
 import firebase from "firebase";
-
+import db from "@/firebase/firebaseInit";
 export default {
   name: "Slider",
   data() {
     return {
+      quizes: null,
+      quiz: null,
       activeIndex: "",
-      quiz: {
-        question: "Jak má Vojta uloženou Máju v telefonu?",
-        answers: [
-          {
-            answer: "Marie",
-            correct: false
-          },
-          {
-            answer: "Kata ponorka ",
-            correct: true
-          },
-          {
-            answer: "Carodejnice",
-            correct: false
-          },
-          {
-            answer: "Ano lasko",
-            correct: false
-          }
-        ]
-      },
-
       swiperOption: {
         effect: "coverflow",
         loop: true,
@@ -108,22 +111,70 @@ export default {
       this.activeIndex = i;
     },
     submitAnswer() {
+      const modal = this.$refs.modal;
+      const modalRight = this.$refs.modalRight;
+      const modalWrong = this.$refs.modalWrong;
+
       if (this.quiz.answers[this.activeIndex].correct) {
+        modal.classList.remove("modal");
+        modalRight.classList.remove("modal-box");
+        setTimeout(() => {
+          modal.classList.add("modal");
+          modalRight.classList.add("modal-box");
+        }, 1600);
+      } else {
+        modal.classList.remove("modal");
+        modalWrong.classList.remove("modal-box");
+        setTimeout(() => {
+          modal.classList.add("modal");
+          modalWrong.classList.add("modal-box");
+        }, 1600);
       }
     }
   },
   computed: {
     ...mapState({
-      user: state => state.state.user
+      user: state => state.state.user,
+      loading: state => state.state.loading
     }),
     swiper() {
       return this.$refs.swiper.swiper;
     }
+  },
+  created() {
+    let quizes = [];
+    this.$store.commit("state/LOADING", true);
+    const quizesRef = db.collection("quizes");
+    quizesRef
+      .get()
+      .then(qs => {
+        qs.forEach(doc => {
+          quizes.push(doc.data());
+        });
+      })
+      .then(() => {
+        console.log("db called for quizes");
+        this.$store.commit("state/LOADING", false);
+        this.quizes = quizes;
+        this.quiz = quizes[Math.floor(Math.random() * quizes.length)];
+      })
+      .catch(err => console.log(err));
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.flip {
+  transform: scale(1, -1);
+}
+
+.modal,
+.modal-box {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.6s;
+}
+
 .swiper-slide {
   background-position: center;
   background-size: cover;
@@ -131,9 +182,6 @@ export default {
   width: 92vw;
   height: 90vh;
   color: black;
-}
-
-.text-gray-light {
 }
 
 .active {
