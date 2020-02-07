@@ -132,14 +132,15 @@ export default {
       const modal = this.$refs.modal;
       const modalRight = this.$refs.modalRight;
       const modalWrong = this.$refs.modalWrong;
+      const userRef = db.collection("users").doc(this.user.uid.toString());
 
-      this.answeredQuizes.indexOf(this.quiz) === -1
-        ? this.answeredQuizes.push(this.quiz)
-        : console.log("This item already exists");
+      this.answeredQuizes.push(this.quiz);
 
       if (this.quiz.answers[this.activeIndex].correct) {
         modal.classList.remove("modal");
         modalRight.classList.remove("modal-box");
+        const increment = firebase.firestore.FieldValue.increment(1);
+        userRef.update({ quizes_total: increment });
         setTimeout(() => {
           modal.classList.add("modal");
           modalRight.classList.add("modal-box");
@@ -148,6 +149,8 @@ export default {
       } else {
         modal.classList.remove("modal");
         modalWrong.classList.remove("modal-box");
+        const decrement = firebase.firestore.FieldValue.increment(-1);
+        userRef.update({ quizes_total: decrement });
         setTimeout(() => {
           modal.classList.add("modal");
           modalWrong.classList.add("modal-box");

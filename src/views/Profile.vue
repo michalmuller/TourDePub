@@ -107,7 +107,7 @@
                   class="flex justify-end mx-3 py-2 border-t border-white"
                 >
                   <div class="flex items-center mr-6">
-                    <span class="text-gray-800 font-bold text-xl mr-2">{{u.img_total}}</span>
+                    <span class="text-gray-800 font-bold text-xl mr-2">{{u.quizes_total}}</span>
                     <img class="h-5" src="../../public/img/icons/quiz.svg" />
                   </div>
                   <div class="flex items-center mr-6">
