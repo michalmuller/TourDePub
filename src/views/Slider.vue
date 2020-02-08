@@ -42,7 +42,7 @@
               </div>
             </div>
             <div class="px-3 pt-5 text-gray-800" v-if="quizesFinished">
-              <p>You finished all quizes, go and buy Mike a beer</p>
+              <p>You finished all quizes, go and get a beer</p>
             </div>
           </swiper-slide>
 
@@ -67,7 +67,7 @@
       >
         <img class="flip" src="../../public/img/icons/thumb.svg" />
         <p class="text-center mt-6 text-white text-lg">Sooo wrong!</p>
-        <p class="text-2xl text-center font-semibold text-white">-30 points</p>
+        <p class="text-2xl text-center font-semibold text-white">{{points}} points</p>
       </div>
 
       <div
@@ -76,7 +76,7 @@
       >
         <img src="../../public/img/icons/thumb.svg" />
         <p class="text-center mt-6 text-white text-lg">Fuck Yeah!</p>
-        <p class="text-2xl text-center font-semibold text-white">+10 points</p>
+        <p class="text-2xl text-center font-semibold text-white">{{points}} points</p>
       </div>
     </div>
   </div>
@@ -90,6 +90,7 @@ export default {
   name: "Slider",
   data() {
     return {
+      points: 0,
       quizesFinished: false,
       answeredQuizes: [],
       quizes: [],
@@ -128,29 +129,59 @@ export default {
         this.quiz = this.quizes[Math.floor(Math.random() * this.quizes.length)];
       }
     },
+    countPoints(min, max) {
+      let randomBetween = Math.floor(Math.random() * (max - min + 1) + min);
+      let round5 = Math.round(randomBetween / 5) * 5;
+      return round5;
+    },
     submitAnswer() {
       const modal = this.$refs.modal;
       const modalRight = this.$refs.modalRight;
       const modalWrong = this.$refs.modalWrong;
+      const batch = db.batch();
       const userRef = db.collection("users").doc(this.user.uid.toString());
 
       this.answeredQuizes.push(this.quiz);
 
       if (this.quiz.answers[this.activeIndex].correct) {
+        const increment = firebase.firestore.FieldValue.increment(1);
+        const p = this.countPoints(10, 25);
+        this.points = p;
+        const points = firebase.firestore.FieldValue.increment(p);
         modal.classList.remove("modal");
         modalRight.classList.remove("modal-box");
-        const increment = firebase.firestore.FieldValue.increment(1);
-        userRef.update({ quizes_total: increment });
+        batch.update(userRef, { quizes_total: increment });
+        batch.update(userRef, { points_total: points });
+        batch
+          .commit()
+          .then(() => {
+            console.log("batch successful");
+          })
+          .catch(err => {
+            console.log(err);
+          });
         setTimeout(() => {
           modal.classList.add("modal");
           modalRight.classList.add("modal-box");
           this.newQuiz();
         }, 1600);
       } else {
+        const decrement = firebase.firestore.FieldValue.increment(-1);
+        const p = this.countPoints(-30, 60);
+        this.points = p;
+        const points = firebase.firestore.FieldValue.increment(p);
         modal.classList.remove("modal");
         modalWrong.classList.remove("modal-box");
-        const decrement = firebase.firestore.FieldValue.increment(-1);
-        userRef.update({ quizes_total: decrement });
+        batch.update(userRef, { points_total: points });
+        batch.update(userRef, { quizes_total: decrement });
+        batch
+          .commit()
+          .then(() => {
+            console.log("batch successful");
+          })
+          .catch(err => {
+            console.log(err);
+          });
         setTimeout(() => {
           modal.classList.add("modal");
           modalWrong.classList.add("modal-box");
@@ -199,7 +230,7 @@ export default {
 .modal-box {
   visibility: hidden;
   opacity: 0;
-  transition: all 0.6s;
+  transition: all 0.5s;
 }
 
 .swiper-slide {

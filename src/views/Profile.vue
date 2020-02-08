@@ -95,7 +95,7 @@
                     <span class="text-gray-800 font-bold text-xl">{{u.displayName}}</span>
                   </div>
                   <div class="flex mr-3">
-                    <span class="mr-3 text-gray-600 text-sm">1000 p.</span>
+                    <span class="mr-3 text-gray-600 text-sm">{{u.points_total}} p.</span>
                     <img
                       :class="{'rotate': showUserIndex == i}"
                       src="../../public/img/icons/arrow_leaderboard.svg"
@@ -237,7 +237,7 @@ export default {
     this.$store.commit("state/LOADING", true);
     const userRef = db.collection("users");
     userRef
-      .orderBy("beer_total", "desc")
+      .orderBy("points_total", "desc")
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {

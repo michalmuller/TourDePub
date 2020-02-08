@@ -82,7 +82,9 @@
 
               <div class="flex items-center ml-6">
                 <img class="w-6" src="../../public/img/icons/img.svg" />
-                <span class="text-lg font-bold text-gray-800 ml-2">{{ pub.images.length }} photos</span>
+                <span
+                  class="text-lg font-bold text-gray-800 ml-2"
+                >{{ pub.images ? pub.images.length: '0' }} photos</span>
               </div>
             </div>
           </div>
@@ -90,7 +92,7 @@
             <p class="text-gray-600 mb-2">Your contribution</p>
             <div class="rounded flex w-full h-12 bg-light-blue justify-between">
               <div
-                @click="beerUpdate(-1)"
+                @click="beerUpdate(-1, -180, -220)"
                 class="bg-blue rounded-l flex justify-center items-center w-12 h-12"
               >
                 <img src="../../public/img/icons/minus.svg" />
@@ -103,7 +105,7 @@
                 >{{ pub[user.uid] }} drinks</span>
               </div>
               <div
-                @click="beerUpdate(1)"
+                @click="beerUpdate(1, 160, 200)"
                 class="bg-blue rounded-r flex justify-center items-center w-12 h-12"
               >
                 <img src="../../public/img/icons/plus.svg" />
@@ -113,11 +115,10 @@
 
           <div class="px-3 mt-6">
             <p class="text-gray-600 mb-2">Gallery</p>
-            <p v-if="imgReload">loading, have a beer ...</p>
+            <p class="text-gray-800" v-if="imgReload">loading, have a beer ...</p>
             <p
-              v-if="!pub.images"
-              v-cloak
-              class="text-sm"
+              v-if="!pub.images && !imgReload"
+              class="text-sm text-gray-800"
             >Add photos to gallery by clicking camera icon in the top</p>
             <div v-if="!imgReload && pub.images && pub.images.length > 0" class="flex flex-wrap">
               <div
@@ -153,6 +154,11 @@ export default {
     };
   },
   methods: {
+    countPoints(min, max) {
+      let randomBetween = Math.floor(Math.random() * (max - min + 1) + min);
+      let round5 = Math.round(randomBetween / 5) * 5;
+      return round5;
+    },
     uploadImage(file) {
       console.log(file);
       this.uploaded = false;
@@ -184,6 +190,9 @@ export default {
             this.$store.commit("state/UPDATE_IMAGES", 1);
             const batch = db.batch();
             const increment = firebase.firestore.FieldValue.increment(1);
+            const points = firebase.firestore.FieldValue.increment(
+              this.countPoints(5, 10)
+            );
             const pubRef = db.collection("pubs").doc(this.pub.id.toString());
             const userRef = db
               .collection("users")
@@ -193,6 +202,7 @@ export default {
             });
 
             batch.update(userRef, { img_total: increment });
+            batch.update(userRef, { points_total: points });
             batch
               .commit()
               .then(() => {
@@ -219,15 +229,19 @@ export default {
     removePub() {
       this.$store.commit("state/REMOVE_PUB");
     },
-    beerUpdate(val) {
+    beerUpdate(val, min, max) {
       this.$store.commit("state/UPDATE_BEER", val);
       const increment = firebase.firestore.FieldValue.increment(val);
+      const points = firebase.firestore.FieldValue.increment(
+        this.countPoints(min, max)
+      );
       const batch = db.batch();
       const dbRef = db.collection("pubs").doc(this.pub.id.toString());
       const userRef = db.collection("users").doc(this.user.uid.toString());
       batch.update(dbRef, { [this.user.uid]: increment });
       batch.update(dbRef, { beer_total: increment });
       batch.update(userRef, { beer_total: increment });
+      batch.update(userRef, { points_total: points });
       batch
         .commit()
         .then(() => {

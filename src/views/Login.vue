@@ -144,6 +144,7 @@ export default {
                   beer_total: 0,
                   img_total: 0,
                   quizes_total: 0,
+                  points_total: 0,
                   role: "user",
                   displayName: currentUser.displayName,
                   photoUrl:

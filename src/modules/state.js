@@ -39,6 +39,7 @@ const mutations = {
   UPDATE_BEER: (state, payload) => {
     state.pub[state.user.uid] += payload;
     state.pubs[state.pub.id - 1][state.user.uid] += payload;
+    state.pubs[state.pub.id - 1].beer_total += payload;
     state.pub.beer_total += payload;
     state.user.beer_total += payload;
   },
