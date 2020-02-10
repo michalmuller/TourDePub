@@ -1,14 +1,18 @@
 <template>
   <div class="absolute bg-black z-50" style="width: 100vw; height: 100Vh">
-    <div class="w-16 h-16 pt-1 ml-3 pl-3 relative z-50" style="margin-top:18px" @click="closeModal">
-      <div class="rounded-full bg-black">
-        <img src="../../public/img/icons/arow_back.svg" class="w-8 h-8" />
-      </div>
+    <div class="ml-5 pl-1 relative z-50" style="margin-top:22px; width:60px" @click="closeModal">
+      <img src="../../public/img/icons/arrow_modal.png" class="h-7" />
     </div>
-    <div class="mx-3 absolute flex items-center" style="height: calc(100% - 120px);">
-      <div class="w-full">
-        <img :src="img" />
-      </div>
+    <div class="absolute top-0" style="height: 100%; width:100%">
+      <swiper :options="swiperModal">
+        <swiper-slide
+          class="h-full w-full flex items-center justify-center"
+          v-for="(image, index) in images"
+          :key="index"
+        >
+          <img style="max-height:100%" :src="image" />
+        </swiper-slide>
+      </swiper>
     </div>
   </div>
 </template>
@@ -17,7 +21,18 @@
 import { mapState, mapMutations } from "vuex";
 export default {
   name: "Modal",
-  props: ["img", "images"],
+  props: ["images", "index"],
+  data() {
+    return {
+      swiperModal: {
+        initialSlide: this.index,
+        slidesPerView: 1,
+        spaceBetween: 24,
+        centeredSlides: true,
+        loop: true
+      }
+    };
+  },
   methods: {
     closeModal() {
       this.$parent.imageModal = false;
@@ -27,4 +42,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.swiper-container {
+  height: 100%;
+  width: 100%;
+}
 </style>

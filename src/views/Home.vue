@@ -46,8 +46,8 @@
         <progress :value="percentage" max="100">{{ percentage }}%</progress>
       </div>
       <div class="px-6 py-3 mt-1 w-full z-30 flex justify-between">
-        <div @click="removePub" class="w-16">
-          <img src="../../public/img/icons/arow_back.svg" class="w-8 h-8" />
+        <div @click="removePub">
+          <img src="../../public/img/icons/arow_back.png" class="h-7" />
         </div>
         <div class="w-12">
           <input
@@ -124,7 +124,7 @@
               <div
                 v-for="(img, index) in pub.images"
                 :key="index"
-                @click="showImageModal(img)"
+                @click="showImageModal(index)"
                 class="border-2 border-white w-1/2"
               >
                 <img class="object-cover h-40 w-full" :src="img" />
@@ -134,7 +134,7 @@
         </div>
       </div>
     </div>
-    <modal :img="currentImage" v-if="imageModal"></modal>
+    <modal :index="currentImage" :images="pub.images" v-if="imageModal"></modal>
   </div>
 </template>
 
@@ -153,15 +153,15 @@ export default {
   data() {
     return {
       imageModal: false,
-      currentImage: "",
+      currentImage: 0,
       uploaded: true,
       percentage: 0,
       imgReload: false
     };
   },
   methods: {
-    showImageModal(img) {
-      this.currentImage = img;
+    showImageModal(index) {
+      this.currentImage = index;
       this.imageModal = true;
     },
     countPoints(min, max) {
