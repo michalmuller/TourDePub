@@ -167,7 +167,7 @@ export default {
         }, 1600);
       } else {
         const decrement = firebase.firestore.FieldValue.increment(-1);
-        const p = this.countPoints(-30, 60);
+        const p = this.countPoints(-30, -60);
         this.points = p;
         const points = firebase.firestore.FieldValue.increment(p);
         modal.classList.remove("modal");
