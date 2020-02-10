@@ -47,7 +47,7 @@
       </div>
       <div class="px-6 py-3 mt-1 w-full z-30 flex justify-between">
         <div @click="removePub" class="w-16">
-          <img src="../../public/img/icons/arow_back.svg" class="w-8 h-8" alt />
+          <img src="../../public/img/icons/arow_back.svg" class="w-8 h-8" />
         </div>
         <div class="w-12">
           <input
@@ -98,7 +98,7 @@
                 <img src="../../public/img/icons/minus.svg" />
               </div>
               <div class="flex justify-center items-center">
-                <img src="../../public/img/icons/beer_color.svg" />
+                <img src="../../public/img/icons/beer_color_bg_blue.svg" />
                 <span
                   v-if="user"
                   class="text-lg font-bold text-gray-800 ml-4"
@@ -124,6 +124,7 @@
               <div
                 v-for="(img, index) in pub.images"
                 :key="index"
+                @click="showImageModal(img)"
                 class="border-2 border-white w-1/2"
               >
                 <img class="object-cover h-40 w-full" :src="img" />
@@ -133,6 +134,7 @@
         </div>
       </div>
     </div>
+    <modal :img="currentImage" v-if="imageModal"></modal>
   </div>
 </template>
 
@@ -143,17 +145,25 @@ import { mapState, mapMutations } from "vuex";
 import state from "../modules/state";
 import firebase from "firebase";
 import db from "@/firebase/firebaseInit";
+import Modal from "../components/Modal";
 
 export default {
   name: "home",
+  components: { Modal },
   data() {
     return {
+      imageModal: false,
+      currentImage: "",
       uploaded: true,
       percentage: 0,
       imgReload: false
     };
   },
   methods: {
+    showImageModal(img) {
+      this.currentImage = img;
+      this.imageModal = true;
+    },
     countPoints(min, max) {
       let randomBetween = Math.floor(Math.random() * (max - min + 1) + min);
       let round5 = Math.round(randomBetween / 5) * 5;

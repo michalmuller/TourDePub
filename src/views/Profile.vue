@@ -46,14 +46,14 @@
             />
             <span class="text-2xl font-bold text-gray-800 font-bold">{{ user.displayName }}</span>
           </div>
-          <div v-if="showAvatars" class="mx-3 bg-white py-3 rounded shadow-around absolute">
+          <div v-on-clickaway="away" v-if="showAvatars" class="mx-3 bg-white py-3 rounded shadow-around absolute">
             <div class="flex justify-between items-center px-3">
               <p class="text-lg font-medium text-gray-600">Choose an avatar</p>
               <div class="p-3" @click="showAvatars = !showAvatars">
                 <img src="../../public/img/icons/cross.svg" />
               </div>
             </div>
-            <div v-if="avatars" class="flex flex-wrap px-3 pt-2">
+            <div v-if="avatars" class="flex flex-wrap px-3 pt-2 overflow-scroll" style="max-height:280px">
               <div
                 class="border-2 border-white w-1/4"
                 v-for="(avatar, index) in avatars"
@@ -65,21 +65,6 @@
             </div>
           </div>
           <div class="overflow-scroll pb-4" style="height: calc(100vh - 200px) !important">
-            <!-- <div class="px-3 mt-5">
-              <p class="text-gray-600 mb-2">Your contribution</p>
-              <div class="rounded flex w-full h-12 bg-light-blue">
-                <div class="flex items-center ml-3">
-                  <img class="w-3" src="../../public/img/icons/beer_color_bg_blue.svg" />
-                  <span class="text-lg font-bold text-gray-800 ml-2">{{user.beer_total}} drinks</span>
-                </div>
-
-                <div class="flex items-center ml-6">
-                  <img class="w-6" src="../../public/img/icons/img.svg" />
-                  <span class="text-lg font-bold text-gray-800 ml-2">{{user.img_total}} photos</span>
-                </div>
-              </div>
-            </div>-->
-
             <div class="px-3 mt-5">
               <p class="text-gray-600 mb-2">Leaderboard</p>
               <div
@@ -149,11 +134,13 @@
 </template>
 
 <script>
+import { mixin as clickaway } from 'vue-clickaway';
 import { mapState, mapMutations } from "vuex";
 import firebase from "firebase";
 import db from "@/firebase/firebaseInit";
 export default {
   name: "Profile",
+  mixins: [ clickaway ],
   data() {
     return {
       showUserIndex: null,
@@ -177,6 +164,9 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    away() {
+      this.showAvatars = false;
     },
     showUser(u, i) {
       if (this.showUserIndex == i) {
