@@ -6,7 +6,15 @@
       class="w-full bg-gradient-primary z-10 top-0 fixed shadow-md"
     >
       <img src="../../public/img/circle_overlay.png" class="absolute" style="width:42%" />
-      <h1 v-show="!pub" class="pt-6 relative px-6 text-2xl font-bold text-white">JBC Tour De Pub</h1>
+      <div class="flex pt-2 px-6 justify-between items-center">
+        <h1 v-show="!pub" class="relative pt-3 text-2xl font-bold text-white">JBC Tour De Pub</h1>
+        <img
+          v-show="!pub"
+          class="h-12 pt-2 px-2 mt-2"
+          src="../../public/img/icons/map.svg"
+          @click="showMap"
+        />
+      </div>
     </div>
 
     <!----------- Home Screen ------------>
@@ -47,7 +55,7 @@
       </div>
       <div class="px-6 py-3 mt-1 w-full z-30 flex justify-between">
         <div @click="removePub">
-          <img src="../../public/img/icons/arow_back.png" class="h-7" />
+          <img src="../../public/img/icons/arow_back.svg" class="h-6" />
         </div>
         <div class="w-12">
           <input
@@ -135,6 +143,7 @@
       </div>
     </div>
     <modal :index="currentImage" :images="pub.images" v-if="imageModal"></modal>
+    <map-modal v-if="mapModal"></map-modal>
   </div>
 </template>
 
@@ -146,12 +155,14 @@ import state from "../modules/state";
 import firebase from "firebase";
 import db from "@/firebase/firebaseInit";
 import Modal from "../components/Modal";
+import MapModal from "../components/MapModal";
 
 export default {
   name: "home",
-  components: { Modal },
+  components: { Modal, MapModal },
   data() {
     return {
+      mapModal: false,
       imageModal: false,
       currentImage: 0,
       uploaded: true,
@@ -160,6 +171,10 @@ export default {
     };
   },
   methods: {
+    showMap() {
+      console.log("map");
+      this.mapModal = true;
+    },
     showImageModal(index) {
       this.currentImage = index;
       this.imageModal = true;
