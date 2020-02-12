@@ -1,7 +1,7 @@
 <template>
   <div class="fixed bg-black z-50 top-0" style="width: 100vw; height: 100vh">
-    <div class="ml-2 pl-1 relative z-50" style="margin-top:11px; width:72px" @click="closeModal">
-      <img src="../../public/img/icons/arrow_modal.svg" class="h-12" />
+    <div class="ml-3 mt-4  pl-1 relative z-50" @click="closeModal">
+      <img src="../../public/img/icons/close.svg" class="h-10" />
     </div>
     <div class="absolute top-0" style="height: 100%; width:100%">
       <div class="h-full w-full flex items-center justify-center">
@@ -61,7 +61,8 @@ export default {
         rotateControl: false,
         fullscreenControl: false,
         disableDefaultUi: false,
-        styles: gmapstyle
+        styles: gmapstyle,
+        gestureHandling: "greedy"
       }
     };
   },

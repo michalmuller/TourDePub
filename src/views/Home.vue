@@ -10,7 +10,7 @@
         <h1 v-show="!pub" class="relative pt-3 text-2xl font-bold text-white">JBC Tour De Pub</h1>
         <img
           v-show="!pub"
-          class="h-12 pt-2 px-2 mt-2"
+          class="h-8 pt-2 pl-2 mt-2"
           src="../../public/img/icons/map.svg"
           @click="showMap"
         />

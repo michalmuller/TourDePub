@@ -1,7 +1,7 @@
 <template>
   <div class="absolute bg-black z-50" style="width: 100vw; height: 100vh">
-    <div class="ml-2 pl-1 relative z-50" style="margin-top:11px; width:72px" @click="closeModal">
-      <img src="../../public/img/icons/arrow_modal.svg" class="h-12" />
+    <div class="ml-3 mt-4 pl-1 relative w-12 z-50"  @click="closeModal">
+      <img src="../../public/img/icons/close.svg" class="h-10" />
     </div>
     <div class="absolute top-0" style="height: 100%; width:100%">
       <swiper :options="swiperModal">
