@@ -20,16 +20,19 @@ module.exports = {
         red: '#E46B5B',
         green: '#79BF60',
         'light-blue': '#EDF2F8',
-        'medium-blue': '#D8E2FF',
+        'medium-blue': '#eaeef8 ',
         'black-transparent': 'rgba(0,0,0,0.75)'
       },
       height: {
-        '7': '1.75rem'
+        '7': '1.75rem',
+        '18': '4.5rem'
       },
       width: {
-        '7': '1.75rem'
+        '7': '1.75rem',
+        '18': '4.5rem'
       },
       boxShadow: {
+        'shadow-sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
         top:
           '0 4px 6px 6px rgba(0, 0, 0, .1), 0 2px 4px -1px rgba(0, 0, 0, .06)',
         around: '0 4px 10px 4px rgba(0, 0, 0, .1), 0 2px 4px -1px rgba(0, 0, 0, .06)',

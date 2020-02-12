@@ -1,47 +1,55 @@
 <template>
   <div id="home">
-    <div
-      id="header"
-      style="height:6.5rem"
-      class="w-full bg-gradient-primary z-10 top-0 fixed shadow-md"
-    >
+    <div style="height:6.5rem" class="w-full bg-gradient-primary z-10 top-0 fixed shadow-md">
       <img src="../../public/img/circle_overlay.png" class="absolute" style="width:42%" />
-      <div class="flex pt-2 px-6 justify-between items-center">
-        <h1 v-show="!pub" class="relative pt-3 text-2xl font-bold text-white">JBC Tour De Pub</h1>
+    </div>
+
+    <!----------- Home Screen ------------>
+    <div v-show="!pub" class="w-full fixed z-20">
+      <div class="px-3 pb-2 mt-6 w-full z-30 flex justify-between items-center">
+        <h1 v-show="!pub" class="relative pl-3 text-2xl font-bold text-white">JBC Tour De Pub</h1>
         <img
           v-show="!pub"
-          class="h-8 pt-2 pl-2 mt-2"
+          class="h-7 pl-2 pr-2 mr-1"
           src="../../public/img/icons/map.svg"
           @click="showMap"
         />
       </div>
-    </div>
+      <div
+        class="bg-white mx-3 relative rounded-t-large shadow-md"
+        style="min-height: calc(100vh - 100px)"
+      >
+        <div class="pt-8 ml-3" v-show="loading">loading ...</div>
 
-    <!----------- Home Screen ------------>
-    <div v-show="!pub" class="px-3" style="padding-top: 106px">
-      <div v-show="loading">loading ...</div>
-      <div v-if="!loading" class="my-3">
-        <div
-          v-for="(pub, index) in pubs"
-          :key="index"
-          @click="getPub(pub)"
-          class="bg-white rounded shadow-md w-full mb-3 flex relative"
-        >
-          <img :src="pub.img" :alt="pub.name" class="rounded-l h-20 w-20" />
-          <div class="pl-3 truncate w-full">
-            <h1
-              class="text-lg font-bold text-gray-800 pt-3 truncate"
-              style="max-width:95%"
-            >{{ pub.name }}</h1>
-            <div class="flex">
-              <div v-if=" pub.beer_total> 0" class="text-lg text-gray-600 flex items-center mr-6">
-                <span class="mt-2">{{ pub.beer_total }}</span>
-                <img class="h-6 w-6" src="../../public/img/icons/beer_color.svg" alt />
+        <div v-if="!loading" class="py-3 flex justify-center items-center text-center w-full">
+          <!-- <p class="text-gray-800 text-2xl font-bold">something</p> -->
+        </div>
+        <div class="overflow-scroll pb-4 pt-4 px-3" style="height: calc(100vh - 150px) !important">
+          <div
+            v-for="(pub, index) in pubs"
+            :key="index"
+            @click="getPub(pub)"
+            class="bg-medium-blue shadow-sm rounded items-center w-full mb-3 py-2 flex relative"
+          >
+            <img :src="pub.img" :alt="pub.name" class="rounded-full ml-2 h-10 w-10" />
+            <div class="pl-4 truncate w-full">
+              <h1 class="font-bold text-gray-800 truncate" style="max-width:95%">{{ pub.name }}</h1>
+              <div class="flex">
+                <div
+                  v-if=" pub.beer_total> 0"
+                  class="text-lg text-gray-700 flex font-semibold items-center mr-6"
+                >
+                  <span>{{ pub.beer_total }}</span>
+                  <img class="h-6 w-6" src="../../public/img/icons/beer_color_bg_blue.svg" alt />
+                </div>
+                <div v-if="pub.images" class="text-lg text-gray-700 flex font-semibold items-end">
+                  <span class="mr-2">{{ pub.images.length }}</span>
+                  <img class="h-6 w-6 pb-1" src="../../public/img/icons/img.svg" alt />
+                </div>
               </div>
-              <div v-if="pub.images" class="text-lg text-gray-600 flex items-end">
-                <span class="mt-2 mr-2">{{ pub.images.length }}</span>
-                <img class="h-6 w-6 pb-1" src="../../public/img/icons/img.svg" alt />
-              </div>
+            </div>
+            <div>
+              <img src="../../public/img/icons/arrow_leaderboard.svg" class="mr-4 rotate-90" />
             </div>
           </div>
         </div>
@@ -79,7 +87,7 @@
           <img class="h-8 w-8 rounded-full mr-3" :src="pub.img" />
           <span>{{ pub.name }}</span>
         </div>
-        <div class="overflow-scroll pb-4" style="height: calc(100vh - 200px) !important">
+        <div class="overflow-scroll pb-4" style="height: calc(100vh - 190px) !important">
           <div class="px-3 mt-5">
             <span class="text-md text-gray-600">Total for JBC Team</span>
             <div class="rounded flex w-full h-12 bg-light-blue mt-2">
@@ -289,6 +297,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.rotate-90 {
+  transform: rotate(-90deg);
+}
+
 .progress-container {
   display: flex;
   width: 100%;

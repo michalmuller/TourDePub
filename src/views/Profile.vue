@@ -1,10 +1,6 @@
 <template>
   <div class="profile">
-    <div
-      id="header"
-      style="height:6.5rem"
-      class="w-full bg-gradient-primary z-10 top-0 fixed shadow-md"
-    >
+    <div style="height:6.5rem" class="w-full bg-gradient-primary z-10 top-0 fixed shadow-md">
       <img src="../../public/img/circle_overlay.png" class="absolute" style="width:42%" />
     </div>
 
@@ -33,27 +29,34 @@
         </div>
       </div>
       <div
-        v-if="!loading"
         class="bg-white mx-3 relative rounded-t-large shadow-md"
         style="min-height: calc(100vh - 100px)"
       >
-        <div class="relative">
+        <div v-if="!loading" class="relative">
           <div class="py-3 flex justify-center items-center text-center w-full" v-if="user">
             <img
               :src="user.photoUrl"
               class="h-8 w-8 rounded-full mr-3 object-cover"
               @click="showAvatars = !showAvatars"
             />
-            <span class="text-2xl font-bold text-gray-800 font-bold">{{ user.displayName }}</span>
+            <span class="text-2xl font-bold text-gray-800">{{ user.displayName }}</span>
           </div>
-          <div v-on-clickaway="away" v-if="showAvatars" class="mx-3 bg-white py-3 rounded shadow-around absolute">
+          <div
+            v-on-clickaway="away"
+            v-if="showAvatars"
+            class="mx-3 bg-white py-3 rounded shadow-around absolute"
+          >
             <div class="flex justify-between items-center px-3">
               <p class="text-lg font-medium text-gray-600">Choose an avatar</p>
               <div class="p-3" @click="showAvatars = !showAvatars">
                 <img src="../../public/img/icons/cross.svg" />
               </div>
             </div>
-            <div v-if="avatars" class="flex flex-wrap px-3 pt-2 overflow-scroll" style="max-height:280px">
+            <div
+              v-if="avatars"
+              class="flex flex-wrap px-3 pt-2 overflow-scroll"
+              style="max-height:280px"
+            >
               <div
                 class="border-2 border-white w-1/4"
                 v-for="(avatar, index) in avatars"
@@ -64,14 +67,14 @@
               </div>
             </div>
           </div>
-          <div class="overflow-scroll pb-4" style="height: calc(100vh - 200px) !important">
+          <div class="overflow-scroll pb-4" style="height: calc(100vh - 181px) !important">
             <div class="px-3 mt-5">
               <p class="text-gray-600 mb-2">Leaderboard</p>
               <div
                 v-for="(u, i) in users"
                 :key="i"
                 class="rounded flex w-full flex-col mb-1"
-                :class="u.displayName == user.displayName ? 'bg-medium-blue': 'bg-light-blue'"
+                :class="u.displayName == user.displayName ? 'bg-medium-blue': 'bg-medium-blue'"
               >
                 <div @click="showUser(u,i)" class="flex justify-between items-center pt-2 pb-2">
                   <div class="flex">
@@ -92,15 +95,15 @@
                   class="flex justify-end mx-3 py-2 border-t border-white"
                 >
                   <div class="flex items-center mr-6">
-                    <span class="text-gray-800 font-bold text-xl mr-2">{{u.quizes_total}}</span>
+                    <span class="text-gray-700 font-bold text-xl mr-2">{{u.quizes_total}}</span>
                     <img class="h-5" src="../../public/img/icons/quiz.svg" />
                   </div>
                   <div class="flex items-center mr-6">
-                    <span class="text-gray-800 font-bold text-xl mr-2">{{u.img_total}}</span>
+                    <span class="text-gray-700 font-bold text-xl mr-2">{{u.img_total}}</span>
                     <img class="h-5" src="../../public/img/icons/img.svg" />
                   </div>
                   <div class="flex items-center">
-                    <span class="text-gray-800 font-bold text-xl mr-2">{{u.beer_total}}</span>
+                    <span class="text-gray-700 font-bold text-xl mr-2">{{u.beer_total}}</span>
                     <img class="w-3" src="../../public/img/icons/beer_color_bg_blue.svg" />
                   </div>
                 </div>
@@ -134,13 +137,13 @@
 </template>
 
 <script>
-import { mixin as clickaway } from 'vue-clickaway';
+import { mixin as clickaway } from "vue-clickaway";
 import { mapState, mapMutations } from "vuex";
 import firebase from "firebase";
 import db from "@/firebase/firebaseInit";
 export default {
   name: "Profile",
-  mixins: [ clickaway ],
+  mixins: [clickaway],
   data() {
     return {
       showUserIndex: null,

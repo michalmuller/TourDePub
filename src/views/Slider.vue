@@ -1,9 +1,7 @@
 <template>
   <div class="slider">
-    <div>
-      <div style="height:6.5rem" class="w-full bg-gradient-primary z-10 top-0 fixed shadow-md">
-        <img src="../../public/img/circle_overlay.png" class="absolute" style="width:42%" />
-      </div>
+    <div style="height:6.5rem" class="w-full bg-gradient-primary z-10 top-0 fixed shadow-md">
+      <img src="../../public/img/circle_overlay.png" class="absolute" style="width:42%" />
     </div>
 
     <div class="w-full top-0 fixed z-20">
@@ -23,16 +21,16 @@
         >
           <div class="px-3">
             <p
-              class="pt-6 px-3 text-gray-600 text-center text-lg font-semibold mb-4"
+              class="pt-6 px-3 text-gray-800 text-center text-lg font-semibold mb-4"
             >{{quiz.question}}</p>
             <div
               v-for="(a, i) in quiz.answers"
               :key="i"
               :class="{active : activeIndex === i}"
-              class="rounded flex w-full py-2 border border-gray-400 items-center flex my-2"
+              class="rounded flex w-full py-2 bg-medium-blue items-center flex my-2"
               @click="selectAnswer(a, i)"
             >
-              <p class="px-3 text-gray-500">{{ a.answer }}</p>
+              <p class="px-3 text-gray-700">{{ a.answer }}</p>
             </div>
             <button
               :disabled="activeIndex === ''"
@@ -86,21 +84,7 @@ export default {
       answeredQuizes: [],
       quizes: [],
       quiz: null,
-      activeIndex: "",
-      swiperOption: {
-        effect: "coverflow",
-        loop: true,
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: "auto",
-        coverflowEffect: {
-          rotate: 0,
-          stretch: 0,
-          depth: 140,
-          modifier: 2,
-          slideShadows: false
-        }
-      }
+      activeIndex: ""
     };
   },
   methods: {

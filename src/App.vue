@@ -78,7 +78,6 @@ html {
   margin: 0 !important;
 }
 body {
-  background-color: #edf2f8;
   font-family: "Montserrat", sans-serif;
   margin: 0 !important;
 }
