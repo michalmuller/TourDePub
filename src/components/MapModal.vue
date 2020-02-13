@@ -1,6 +1,6 @@
 <template>
   <div class="fixed bg-black z-50 top-0" style="width: 100vw; height: 100vh">
-    <div class="ml-3 mt-4  pl-1 relative z-50" @click="closeModal">
+    <div class="ml-3 mt-4 pl-1 relative z-50" @click="closeModal">
       <img src="../../public/img/icons/close.svg" class="h-10" />
     </div>
     <div class="absolute top-0" style="height: 100%; width:100%">
@@ -9,17 +9,17 @@
           ref="mapRef"
           :center="center"
           :options="{options}"
-          :zoom="14"
+          :zoom="15"
           style="width: 100%; height: 100%"
         >
           <GmapMarker
-            v-for="(m, index) in markers"
+            v-for="(pub, index) in pubs"
             :key="index"
-            :position.sync="m.position"
+            :position.sync="pub.position"
             :clickable="true"
-            :label="{ text: m.text, color: '#34477B', fontSize: '16px', fontWeight: 'bold'}"
+            :label="{ text: pub.text, color: '#34477B', fontSize: '16px', fontWeight: 'bold'}"
             :icon="{ url: require('../../public/img/icons/marker.svg'), labelOrigin: {x: 18, y: -3}}"
-            @click="panTo(m.position)"
+            @click="openPub(pub)"
           />
         </GmapMap>
       </div>
@@ -28,10 +28,13 @@
 </template>
 
 <script>
+import firebase from "firebase";
+import db from "@/firebase/firebaseInit";
 import { mapState, mapMutations } from "vuex";
 import gmapstyle from "../gmap.json";
 export default {
   name: "Map",
+  props: ["pubs"],
   data() {
     return {
       label: {
@@ -44,15 +47,6 @@ export default {
         lat: 57.04724531523552,
         lng: 9.923821502137255
       },
-      markers: [
-        {
-          text: "Victorka",
-          position: {
-            lat: 57.0509527,
-            lng: 9.918176
-          }
-        }
-      ],
       options: {
         zoomControl: false,
         mapTypeControl: false,
@@ -71,6 +65,10 @@ export default {
       this.$refs.mapRef.$mapPromise.then(map => {
         map.panTo(pos);
       });
+    },
+    openPub(pub) {
+      this.$parent.mapModal = false;
+      this.$parent.getPub(pub);
     },
     closeModal() {
       this.$parent.mapModal = false;

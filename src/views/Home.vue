@@ -7,7 +7,7 @@
     <!----------- Home Screen ------------>
     <div v-show="!pub" class="w-full fixed z-20">
       <div class="px-3 pb-2 mt-6 w-full z-30 flex justify-between items-center">
-        <h1 v-show="!pub" class="relative pl-3 text-2xl font-bold text-white">JBC Tour De Pub</h1>
+        <h1 v-show="!pub" class="relative pl-3 text-2xl font-bold text-white">Tour De Pub</h1>
         <img
           v-show="!pub"
           class="h-7 pl-2 pr-2 mr-1"
@@ -21,10 +21,10 @@
       >
         <div class="pt-8 ml-3" v-show="loading">loading ...</div>
 
-        <div v-if="!loading" class="py-3 flex justify-center items-center text-center w-full">
-          <!-- <p class="text-gray-800 text-2xl font-bold">something</p> -->
+        <div v-if="!loading" class="pb-3 pt-6 flex justify-center items-center text-center w-full">
+          <p class="text-gray-800 text-2xl font-bold">JBC Team</p>
         </div>
-        <div class="overflow-scroll pb-4 pt-4 px-3" style="height: calc(100vh - 150px) !important">
+        <div class="overflow-scroll pb-4 pt-2 px-3" style="height: calc(100vh - 184px) !important">
           <div
             v-for="(pub, index) in pubs"
             :key="index"
@@ -61,7 +61,7 @@
       <div class="progress-container">
         <progress :value="percentage" max="100">{{ percentage }}%</progress>
       </div>
-      <div class="px-6 py-3 mt-1 w-full z-30 flex justify-between">
+      <div class="px-6 pt-4 pb-2 mt-1 w-full z-30 flex justify-between">
         <div @click="removePub">
           <img src="../../public/img/icons/arow_back.svg" class="h-6" />
         </div>
@@ -74,14 +74,14 @@
             @change="uploadImage($event.target.files[0])"
           />
           <label id="choose-file" for="file">
-            <img src="../../public/img/icons/camera.svg" class="ml-3 w-8 h-8" />
+            <img src="../../public/img/icons/camera.svg" class="ml-4 w-7 h-7" />
           </label>
         </div>
       </div>
       <div
         v-if="!loading"
-        class="bg-white mx-3 mt-1 relative rounded-t-large"
-        style="min-height: calc(100vh - 200px)"
+        class="bg-white mx-3 relative rounded-t-large"
+        style="min-height: calc(100vh - 200px); margin-top:6px"
       >
         <div class="py-4 flex text-lg font-bold text-gray-800 justify-center items-center">
           <img class="h-8 w-8 rounded-full mr-3" :src="pub.img" />
@@ -151,7 +151,7 @@
       </div>
     </div>
     <modal :index="currentImage" :images="pub.images" v-if="imageModal"></modal>
-    <map-modal v-if="mapModal"></map-modal>
+    <map-modal :pubs="pubs" v-if="mapModal"></map-modal>
   </div>
 </template>
 
