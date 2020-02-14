@@ -1,7 +1,7 @@
 <template>
   <div class="fixed bg-black z-50 top-0" style="width: 100vw; height: 100vh">
-    <div class="ml-3 mt-4 pl-1 relative z-50" @click="closeModal">
-      <img src="../../public/img/icons/close.svg" class="h-10" />
+    <div class="ml-3 mt-5 pl-1 relative z-50" @click="closeModal">
+      <img src="../../public/img/icons/close.svg" class="h-8" />
     </div>
     <div class="absolute top-0" style="height: 100%; width:100%">
       <div class="h-full w-full flex items-center justify-center">
@@ -37,15 +37,9 @@ export default {
   props: ["pubs"],
   data() {
     return {
-      label: {
-        text: "s",
-        color: "#34477B",
-        fontSize: "16px",
-        fontWeight: "bold"
-      },
       center: {
-        lat: 57.04724531523552,
-        lng: 9.923821502137255
+        lat: 57.04714531523552,
+        lng: 9.922921502137255
       },
       options: {
         zoomControl: false,
