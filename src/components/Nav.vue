@@ -2,7 +2,7 @@
   <div class="fixed z-20 bottom-0 w-full shadow-top">
     <div id="nav" class="bg-white flex justify-around items-center pb-1">
       <div>
-        <router-link to="/slider" class="nav-icon pt-2 flex items-center flex-col">
+        <router-link to="/quiz" class="nav-icon pt-2 flex items-center flex-col">
           <div class="w-12 h-7 flex items-center justify-center">
             <img class="h-7" src="../../public/img/icons/question.svg" />
           </div>

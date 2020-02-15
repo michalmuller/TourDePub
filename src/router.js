@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Login from './views/Login.vue';
-import Slider from './views/Slider.vue';
+import Quiz from './views/Quiz.vue';
 import Profile from './views/Profile.vue';
 import CameraView from '@/components/CameraView';
 
@@ -23,9 +23,9 @@ export default new Router({
       component: Home,
     },
     {
-      path: '/slider',
-      name: 'slider',
-      component: Slider,
+      path: '/quiz',
+      name: 'quiz',
+      component: Quiz,
     },
     {
       path: '/login',

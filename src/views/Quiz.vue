@@ -1,5 +1,5 @@
 <template>
-  <div class="slider">
+  <div class="quiz">
     <div style="height:6.5rem" class="w-full bg-gradient-primary z-10 top-0 fixed shadow-md">
       <img src="../../public/img/circle_overlay.png" class="absolute" style="width:42%" />
     </div>
@@ -76,7 +76,7 @@ import { mapState, mapMutations } from "vuex";
 import firebase from "firebase";
 import db from "@/firebase/firebaseInit";
 export default {
-  name: "Slider",
+  name: "Quiz",
   data() {
     return {
       points: 0,
