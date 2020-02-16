@@ -17,7 +17,7 @@
         <div
           v-if="!loading && quiz"
           class="overflow-scroll pb-6"
-          style="height: calc(100vh - 186px) !important"
+          style="height: calc(100vh - 126px) !important"
         >
           <div class="px-3">
             <p
@@ -186,7 +186,7 @@ export default {
         });
       })
       .then(() => {
-        console.log("db called for quizes");
+        console.log("DB called for quizes");
         this.$store.commit("state/LOADING", false);
         this.quizes = quizes;
         this.quiz = quizes[Math.floor(Math.random() * quizes.length)];

@@ -21,7 +21,7 @@
       >
         <div class="pt-8 ml-3" v-show="loading">loading ...</div>
 
-        <div v-if="!loading" class="pb-3 pt-6 flex justify-center items-center text-center w-full">
+        <div v-if="!loading" class="pb-3 pt-4 flex justify-center items-center text-center w-full">
           <p class="text-gray-800 text-2xl font-bold">JBC Team</p>
         </div>
         <div class="overflow-scroll pb-4 pt-2 px-3" style="height: calc(100vh - 184px) !important">
@@ -35,6 +35,9 @@
             <div class="pl-4 truncate w-full">
               <h1 class="font-bold text-gray-800 truncate" style="max-width:95%">{{ pub.name }}</h1>
               <div class="flex">
+                <div v-if="pub[user.uid].challenge" class="flex font-semibold items-end mr-6">
+                  <img class="h-6 w-6 pb-1" src="../../public/img/icons/challenge.svg" alt />
+                </div>
                 <div
                   v-if=" pub.beer_total> 0"
                   class="text-lg text-gray-700 flex font-semibold items-center mr-6"
@@ -88,6 +91,24 @@
           <span>{{ pub.name }}</span>
         </div>
         <div class="overflow-scroll pb-4" style="height: calc(100vh - 190px) !important">
+          <div class="px-3 mt-5 relative">
+            <div class="flex items-center">
+              <span class="text-md text-gray-600">Challenge</span>
+              <span class="text-xs ml-2 text-gray-500">({{pub.challenge_points}} points)</span>
+            </div>
+            <img
+              v-show="pub[user.uid].challenge"
+              class="absolute right-0 top-0 mt-2 h-6 mr-5"
+              src="../../public/img/icons/challenge.svg"
+            />
+            <div class="rounded flex w-full py-3 bg-light-blue mt-2">
+              <div class="flex ml-3">
+                <checkbox v-model="pub[user.uid].challenge" @change="updateChallenge"></checkbox>
+                <span class="font-bold text-sm text-gray-800 ml-2">{{pub.challenge}}</span>
+              </div>
+            </div>
+          </div>
+
           <div class="px-3 mt-5">
             <span class="text-md text-gray-600">Total for JBC Team</span>
             <div class="rounded flex w-full h-12 bg-light-blue mt-2">
@@ -118,7 +139,7 @@
                 <span
                   v-if="user"
                   class="text-lg font-bold text-gray-800 ml-4"
-                >{{ pub[user.uid] }} drinks</span>
+                >{{ pub[user.uid].beer }} drinks</span>
               </div>
               <div
                 @click="beerUpdate(1, 160, 200)"
@@ -164,10 +185,11 @@ import firebase from "firebase";
 import db from "@/firebase/firebaseInit";
 import Modal from "../components/Modal";
 import MapModal from "../components/MapModal";
+import Checkbox from "../components/Checkbox.vue";
 
 export default {
   name: "home",
-  components: { Modal, MapModal },
+  components: { Modal, MapModal, Checkbox },
   data() {
     return {
       mapModal: false,
@@ -180,7 +202,6 @@ export default {
   },
   methods: {
     showMap() {
-      console.log("map");
       this.mapModal = true;
     },
     showImageModal(index) {
@@ -193,7 +214,6 @@ export default {
       return round5;
     },
     uploadImage(file) {
-      console.log(file);
       this.uploaded = false;
       let storageRef = firebase
         .storage()
@@ -262,6 +282,34 @@ export default {
     removePub() {
       this.$store.commit("state/REMOVE_PUB");
     },
+    updateChallenge() {
+      this.$store.commit(
+        "state/UPDATE_CHALLENGE",
+        this.pub[this.user.uid].challenge
+      );
+      const batch = db.batch();
+      const dbRef = db.collection("pubs").doc(this.pub.id.toString());
+      const userRef = db.collection("users").doc(this.user.uid.toString());
+      const val = this.pub[this.user.uid].challenge ? 1 : -1;
+      const points = this.pub[this.user.uid].challenge
+        ? this.pub.challenge_points
+        : -this.pub.challenge_points;
+      const increment = firebase.firestore.FieldValue.increment(points);
+      const count = firebase.firestore.FieldValue.increment(val);
+      batch.update(dbRef, {
+        [`${this.user.uid}.challenge`]: this.pub[this.user.uid].challenge
+      });
+      batch.update(userRef, { challenges_total: count });
+      batch.update(userRef, { points_total: increment });
+      batch
+        .commit()
+        .then(() => {
+          console.log("batch successful");
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     beerUpdate(val, min, max) {
       this.$store.commit("state/UPDATE_BEER", val);
       const increment = firebase.firestore.FieldValue.increment(val);
@@ -271,7 +319,8 @@ export default {
       const batch = db.batch();
       const dbRef = db.collection("pubs").doc(this.pub.id.toString());
       const userRef = db.collection("users").doc(this.user.uid.toString());
-      batch.update(dbRef, { [this.user.uid]: increment });
+
+      batch.update(dbRef, { [`${this.user.uid}.beer`]: increment });
       batch.update(dbRef, { beer_total: increment });
       batch.update(userRef, { beer_total: increment });
       batch.update(userRef, { points_total: points });

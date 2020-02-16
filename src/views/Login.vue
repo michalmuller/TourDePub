@@ -26,7 +26,7 @@
         <div class="mb-4">
           <div class="flex justify-between">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
-            <p class="text-xs text-gray-500">8 char. min</p>
+            <p v-show="signUpToggle" class="text-xs text-gray-500">8 char. min</p>
           </div>
           <input
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -37,7 +37,15 @@
           />
         </div>
         <div class="mb-4" v-show="signUpToggle">
-          <checkbox v-model="terms"></checkbox>
+          <checkbox v-model="terms">
+            <p class="text-sm ml-2 text-gray-800">
+              I agree to
+              <span
+                @click="openTermsModal"
+                class="text-blue font-semibold"
+              >terms and stuff</span>
+            </p>
+          </checkbox>
           <p
             v-if="terms && !openedTerms"
             class="text-xs text-red pt-1"
@@ -45,8 +53,8 @@
         </div>
         <div class="flex mt-3">
           <button
-            :disabled="!terms || displayName.length < 3 || email.length < 3 || password.length < 8"
-            :class="{'opacity-50': ( !terms || displayName.length < 3 || email.length < 3 || password.length < 8)}"
+            :disabled="!terms || displayName.length < 1 || email.length < 3 || password.length < 8"
+            :class="{'opacity-50': ( !terms || displayName.length < 1 || email.length < 3 || password.length < 8)}"
             v-if="signUpToggle"
             class="w-full bg-blue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
@@ -140,7 +148,7 @@ export default {
       terms: false,
       openTerms: false,
       openedTerms: false,
-      signUpToggle: true,
+      signUpToggle: false,
       email: "",
       password: "",
       displayName: ""
@@ -149,6 +157,10 @@ export default {
   methods: {
     toggle() {
       this.signUpToggle = !this.signUpToggle;
+    },
+    openTermsModal() {
+      this.openTerms = true;
+      this.openedTerms = true;
     },
     agreeToTerms() {
       this.terms = true;
@@ -195,7 +207,7 @@ export default {
                       .doc(doc.id)
                       .set(
                         {
-                          [currentUser.uid]: 0
+                          [currentUser.uid]: { beer: 0, challenge: false }
                         },
                         { merge: true }
                       );
@@ -218,6 +230,7 @@ export default {
                   img_total: 0,
                   quizes_total: 0,
                   points_total: 0,
+                  challenges_total: 0,
                   role: "user",
                   displayName: currentUser.displayName,
                   photoUrl:

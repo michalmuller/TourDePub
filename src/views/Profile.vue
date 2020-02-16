@@ -33,7 +33,7 @@
         style="min-height: calc(100vh - 100px)"
       >
         <div v-if="!loading" class="relative">
-          <div class="py-3 flex justify-center items-center text-center w-full" v-if="user">
+          <div class="pb-3 pt-4 flex justify-center items-center text-center w-full" v-if="user">
             <img
               :src="user.photoUrl"
               class="h-8 w-8 rounded-full mr-3 object-cover"
@@ -94,6 +94,10 @@
                   v-if="showUserIndex == i"
                   class="flex justify-end mx-3 py-2 border-t border-white"
                 >
+                  <div class="flex items-center mr-5">
+                    <span class="text-gray-700 font-bold text-xl mr-2">{{u.challenges_total}}</span>
+                    <img class="h-5" src="../../public/img/icons/challenge.svg" />
+                  </div>
                   <div class="flex items-center mr-6">
                     <span class="text-gray-700 font-bold text-xl mr-2">{{u.quizes_total}}</span>
                     <img class="h-5" src="../../public/img/icons/quiz.svg" />

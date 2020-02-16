@@ -17,10 +17,11 @@
         />
       </svg>
     </div>
-    <p class="text-sm ml-2 text-gray-800">
+    <slot> </slot>
+    <!-- <p class="text-sm ml-2 text-gray-800">
       I agree to
       <span @click="openTerms" class="text-blue font-semibold">terms and stuff</span>
-    </p>
+    </p> -->
   </div>
 </template>
 
@@ -35,11 +36,5 @@ export default {
       required: true
     }
   },
-  methods: {
-    openTerms() {
-      this.$parent.openTerms = true;
-      this.$parent.openedTerms = true;
-    }
-  }
 };
 </script>
