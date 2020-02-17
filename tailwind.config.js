@@ -21,7 +21,7 @@ module.exports = {
         green: '#79BF60',
         'light-blue': '#EDF2F8',
         'medium-blue': '#eaeef8 ',
-        'black-transparent': 'rgba(0,0,0,0.75)'
+        'black-transparent': 'rgba(0,0,0,0.75)',
       },
       height: {
         '7': '1.75rem',

@@ -67,7 +67,7 @@
               </div>
             </div>
           </div>
-          <div class="overflow-scroll pb-4" style="height: calc(100vh - 181px) !important">
+          <div class="overflow-scroll pb-4" style="height: calc(100vh - 200px) !important">
             <div class="px-3 mt-5">
               <p class="text-gray-600 mb-2">Leaderboard</p>
               <div
@@ -120,18 +120,67 @@
 
             <div class="px-3 mt-6" v-if="user.role == 'admin'">
               <p class="text-gray-600 mb-2">Admin</p>
-              <p class="mb-2">Delete user from pubs</p>
-              <input
-                class="mb-3 w-full border rounded"
-                type="text"
-                v-model="firebaseUid"
-                placeholder="RiiEpdGjcYq3gpd0F2"
-              />
-              <button
-                class="bg-blue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit"
-                @click="deleteUser"
-              >Delete user</button>
+              <checkbox v-model="showAdminOptions">
+                <p class="ml-3 text-gray-600">show admin options</p>
+              </checkbox>
+              <div class="mt-6" v-show="showAdminOptions">
+                <div>
+                  <p class="mb-2 text-gray-600">Delete user from pubs</p>
+                  <div class="flex">
+                    <input
+                      class="w-full border rounded py-1 px-3 mr-3"
+                      type="text"
+                      v-model="firebaseUid"
+                      placeholder="RiiEpdGjcYq3gpd0F2"
+                    />
+                    <button
+                      class="bg-blue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      type="submit"
+                      @click="deleteUser"
+                    >delete</button>
+                  </div>
+                </div>
+                <div class="mt-6">
+                  <p class="mb-2 text-gray-600">Create new quiz</p>
+                  <div class="flex flex-wrap">
+                    <input
+                      class="w-full border rounded py-2 px-3 mb-3"
+                      type="text"
+                      placeholder="question"
+                      v-model="question"
+                    />
+                    <input
+                      class="w-full text-white placeholder-indigo-200 rounded py-2 mb-2 px-3 bg-gradient-primary"
+                      type="text"
+                      placeholder="correct answer"
+                      v-model="correctAnswer"
+                    />
+                    <input
+                      class="w-full rounded py-2 mb-2 px-3 bg-medium-blue"
+                      type="text"
+                      placeholder="wrong answer"
+                      v-model="falseAnswer1"
+                    />
+                    <input
+                      class="w-full rounded py-2 mb-2 px-3 bg-medium-blue"
+                      type="text"
+                      placeholder="wrong answer"
+                      v-model="falseAnswer2"
+                    />
+                    <input
+                      class="w-full rounded py-2 mb-2 px-3 bg-medium-blue"
+                      type="text"
+                      placeholder="wrong answer"
+                      v-model="falseAnswer3"
+                    />
+                    <button
+                      @click="submitQuiz"
+                      class="bg-blue w-full text-white font-bold py-2 mt-6 px-4 rounded focus:outline-none focus:shadow-outline"
+                      type="submit"
+                    >submit</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -145,19 +194,69 @@ import { mixin as clickaway } from "vue-clickaway";
 import { mapState, mapMutations } from "vuex";
 import firebase from "firebase";
 import db from "@/firebase/firebaseInit";
+import Checkbox from "../components/Checkbox.vue";
 export default {
   name: "Profile",
   mixins: [clickaway],
+  components: { Checkbox },
   data() {
     return {
       showUserIndex: null,
       firebaseUid: "",
       options: false,
       avatars: null,
-      showAvatars: false
+      showAvatars: false,
+      showAdminOptions: true,
+      question: "",
+      correctAnswer: "",
+      falseAnswer1: "",
+      falseAnswer3: "",
+      falseAnswer2: ""
     };
   },
   methods: {
+    shuffle(array) {
+      var currentIndex = array.length,
+        temporaryValue,
+        randomIndex;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+
+      return array;
+    },
+    submitQuiz() {
+      var arr = [
+        { answer: this.correctAnswer, correct: true },
+        { answer: this.falseAnswer1, correct: false },
+        { answer: this.falseAnswer2, correct: false },
+        { answer: this.falseAnswer3, correct: false }
+      ];
+      arr = this.shuffle(arr);
+      const data = {
+        question: this.question,
+        answers: arr
+      };
+      db.collection("quizes")
+        .add(data)
+        .then(() => {
+          (this.correctAnswer = ""),
+            (this.falseAnswer1 = ""),
+            (this.falseAnswer2 = ""),
+            (this.falseAnswer3 = "");
+          console.log("quiz submitted");
+        })
+        .catch(err => console.log("Error: ", err));
+    },
     signOut() {
       firebase
         .auth()
@@ -258,7 +357,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .rotate {
   transform: rotate(180deg);
 }
