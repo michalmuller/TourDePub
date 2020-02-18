@@ -37,7 +37,7 @@ export default {
           querySnapshot.forEach(doc => {
             pubs.push(doc.data());
           });
-          console.log("DB called");
+          console.log("DB called pubs");
         })
         .then(() => {
           this.$store.commit("state/LOADING", false);

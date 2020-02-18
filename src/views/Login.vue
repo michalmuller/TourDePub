@@ -113,7 +113,7 @@
           '100% GDPR compliant', then this app is about 2%. By agreeing to the terms and conditions you are saying that you are okay with it.
         </p>
         <p class="text-gray-700 text-sm mb-3">
-          If the application crashes or is not working at times. Don't be an asshole about it, especially if your name is Standa. the camera might not work sometimes. It is a fucking
+          If the application crashes or is not working at times, don't be an asshole about it, especially if your name is Standa. the camera might not work sometimes. It is a fucking
           miracle that it does work most of the time, so stop bitching about and appreciate it okay.
         </p>
         <p class="text-gray-700 text-sm">Another thing, DON'T CHEAT!</p>
@@ -193,7 +193,6 @@ export default {
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(res => {
           var currentUser = firebase.auth().currentUser;
-
           currentUser
             .updateProfile({
               displayName: this.displayName
@@ -233,6 +232,7 @@ export default {
                   challenges_total: 0,
                   role: "user",
                   displayName: currentUser.displayName,
+                  uid: currentUser.uid,
                   photoUrl:
                     "https://firebasestorage.googleapis.com/v0/b/jbctourdepub.appspot.com/o/avatars%2Favatar_empty.svg?alt=media&token=f08288be-a117-480a-804c-323fa83c1417"
                 });

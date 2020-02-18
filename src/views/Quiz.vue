@@ -40,7 +40,7 @@
             >Submit</button>
           </div>
         </div>
-        <div class="px-3 pt-5 text-gray-800" v-if="quizesFinished">
+        <div class="px-3 pt-6 text-center text-gray-800" v-if="quizesFinished">
           <p>You finished all quizes, go and get a beer</p>
         </div>
       </div>

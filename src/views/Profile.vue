@@ -67,7 +67,7 @@
               </div>
             </div>
           </div>
-          <div class="overflow-scroll pb-4" style="height: calc(100vh - 200px) !important">
+          <div class="overflow-scroll pb-4" style="height: calc(100vh - 192px) !important">
             <div class="px-3 mt-5">
               <p class="text-gray-600 mb-2">Leaderboard</p>
               <div
@@ -120,65 +120,112 @@
 
             <div class="px-3 mt-6" v-if="user.role == 'admin'">
               <p class="text-gray-600 mb-2">Admin</p>
-              <checkbox v-model="showAdminOptions">
-                <p class="ml-3 text-gray-600">show admin options</p>
+              <checkbox v-model="showDeleteUser">
+                <p class="ml-3 text-gray-600">Delete user from DB</p>
               </checkbox>
-              <div class="mt-6" v-show="showAdminOptions">
-                <div>
-                  <p class="mb-2 text-gray-600">Delete user from pubs</p>
-                  <div class="flex">
-                    <input
-                      class="w-full border rounded py-1 px-3 mr-3"
-                      type="text"
-                      v-model="firebaseUid"
-                      placeholder="RiiEpdGjcYq3gpd0F2"
-                    />
-                    <button
-                      class="bg-blue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                      type="submit"
-                      @click="deleteUser"
-                    >delete</button>
-                  </div>
+              <div class="mt-2 mb-6" v-show="showDeleteUser">
+                <div class="flex">
+                  <input
+                    class="w-full border rounded py-1 px-3 mr-3"
+                    type="text"
+                    v-model="firebaseUid"
+                    placeholder="RiiEpdGjcYq3gpd0F2"
+                  />
+                  <button
+                    class="bg-blue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="submit"
+                    @click="deleteUser"
+                  >delete</button>
                 </div>
-                <div class="mt-6">
-                  <p class="mb-2 text-gray-600">Create new quiz</p>
-                  <div class="flex flex-wrap">
-                    <input
-                      class="w-full border rounded py-2 px-3 mb-3"
-                      type="text"
-                      placeholder="question"
-                      v-model="question"
-                    />
-                    <input
-                      class="w-full text-white placeholder-indigo-200 rounded py-2 mb-2 px-3 bg-gradient-primary"
-                      type="text"
-                      placeholder="correct answer"
-                      v-model="correctAnswer"
-                    />
-                    <input
-                      class="w-full rounded py-2 mb-2 px-3 bg-medium-blue"
-                      type="text"
-                      placeholder="wrong answer"
-                      v-model="falseAnswer1"
-                    />
-                    <input
-                      class="w-full rounded py-2 mb-2 px-3 bg-medium-blue"
-                      type="text"
-                      placeholder="wrong answer"
-                      v-model="falseAnswer2"
-                    />
-                    <input
-                      class="w-full rounded py-2 mb-2 px-3 bg-medium-blue"
-                      type="text"
-                      placeholder="wrong answer"
-                      v-model="falseAnswer3"
-                    />
-                    <button
-                      @click="submitQuiz"
-                      class="bg-blue w-full text-white font-bold py-2 mt-6 px-4 rounded focus:outline-none focus:shadow-outline"
-                      type="submit"
-                    >submit</button>
-                  </div>
+              </div>
+              <checkbox class="mt-2" v-model="showCreateQuiz">
+                <p class="ml-3 text-gray-600">Create new quiz</p>
+              </checkbox>
+              <div class="mt-2" v-show="showCreateQuiz">
+                <div class="flex flex-wrap">
+                  <input
+                    class="w-full border rounded py-2 px-3 mb-3"
+                    type="text"
+                    placeholder="question"
+                    v-model="question"
+                  />
+                  <input
+                    class="w-full text-white placeholder-indigo-200 rounded py-2 mb-2 px-3 bg-gradient-primary"
+                    type="text"
+                    placeholder="correct answer"
+                    v-model="correctAnswer"
+                  />
+                  <input
+                    class="w-full rounded py-2 mb-2 px-3 bg-medium-blue"
+                    type="text"
+                    placeholder="wrong answer"
+                    v-model="falseAnswer1"
+                  />
+                  <input
+                    class="w-full rounded py-2 mb-2 px-3 bg-medium-blue"
+                    type="text"
+                    placeholder="wrong answer"
+                    v-model="falseAnswer2"
+                  />
+                  <input
+                    class="w-full rounded py-2 mb-2 px-3 bg-medium-blue"
+                    type="text"
+                    placeholder="wrong answer"
+                    v-model="falseAnswer3"
+                  />
+                  <button
+                    @click="submitQuiz"
+                    class="bg-blue w-full text-white font-bold py-2 mt-6 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="submit"
+                  >submit</button>
+                </div>
+              </div>
+              <checkbox class="mt-2" v-model="showCreatePub">
+                <p class="ml-3 text-gray-600">Create new pub</p>
+              </checkbox>
+              <div class="mt-2" v-show="showCreatePub">
+                <div class="flex flex-wrap">
+                  <input
+                    class="w-1/2 border rounded py-2 px-3 mb-3"
+                    type="text"
+                    placeholder="pub name"
+                    v-model="pub.name"
+                  />
+                  <input
+                    class="w-1/2 border rounded py-2 px-3 mb-3"
+                    type="text"
+                    placeholder="map text"
+                    v-model="pub.text"
+                  />
+                  <input
+                    class="w-2/3 border rounded py-2 px-3 mb-3"
+                    type="text"
+                    placeholder="challenge"
+                    v-model="pub.challenge"
+                  />
+                  <input
+                    class="w-1/3 border rounded py-2 px-3 mb-3"
+                    type="number"
+                    placeholder="points"
+                    v-model.number="pub.challenge_points"
+                  />
+                  <input
+                    class="w-1/2 border rounded py-2 px-3 mb-3"
+                    placeholder="latitude"
+                    type="number"
+                    v-model.number="pub.lat"
+                  />
+                  <input
+                    class="w-1/2 border rounded py-2 px-3 mb-3"
+                    placeholder="longitude"
+                    type="number"
+                    v-model.number="pub.lng"
+                  />
+                  <button
+                    @click="createPub"
+                    type="submit"
+                    class="bg-blue w-full text-white font-bold py-2 mt-6 px-4 rounded focus:outline-none focus:shadow-outline"
+                  >submit</button>
                 </div>
               </div>
             </div>
@@ -206,12 +253,22 @@ export default {
       options: false,
       avatars: null,
       showAvatars: false,
-      showAdminOptions: true,
+      showDeleteUser: false,
+      showCreateQuiz: false,
+      showCreatePub: false,
       question: "",
       correctAnswer: "",
       falseAnswer1: "",
       falseAnswer3: "",
-      falseAnswer2: ""
+      falseAnswer2: "",
+      pub: {
+        name: "",
+        text: "",
+        challenge: "",
+        challenge_points: 55,
+        lat: 57.05,
+        lng: 9.92
+      }
     };
   },
   methods: {
@@ -249,13 +306,50 @@ export default {
       db.collection("quizes")
         .add(data)
         .then(() => {
-          (this.correctAnswer = ""),
+          (this.question = ""),
+            (this.correctAnswer = ""),
             (this.falseAnswer1 = ""),
             (this.falseAnswer2 = ""),
             (this.falseAnswer3 = "");
           console.log("quiz submitted");
         })
         .catch(err => console.log("Error: ", err));
+    },
+    createPub() {
+      const id = this.pubs.length + 1;
+      const users = this.users.reduce((map, obj) => {
+        map[obj.uid] = { beer: 0, challenge: false };
+        return map;
+      }, {});
+
+      const pub = {
+        id: id,
+        name: this.pub.name,
+        text: this.pub.text,
+        challenge: this.pub.challenge,
+        challenge_points: this.pub.challenge_points,
+        beer_total: 0,
+        img:
+          "https://firebasestorage.googleapis.com/v0/b/jbctourdepub.appspot.com/o/pub%2Fpub.png?alt=media&token=d528a8b3-ebba-4593-bca6-6e1b08b50905",
+        position: {
+          lat: this.pub.lat,
+          lng: this.pub.lng
+        },
+        ...users
+      };
+      db.collection("pubs")
+        .doc(id.toString())
+        .set(pub)
+        .then(() => {
+          (this.pub.name = ""),
+            (this.pub.text = ""),
+            (this.pub.challenge = ""),
+            (this.pub.challenge_points = ""),
+            (this.pub.lat = ""),
+            (this.pub.lng = "");
+          console.log("pub written to DB");
+        })
+        .catch(err => console.log(err));
     },
     signOut() {
       firebase
@@ -324,7 +418,6 @@ export default {
       user: state => state.state.user,
       users: state => state.state.users,
       pubs: state => state.state.pubs,
-      pub: state => state.state.pub,
       loading: state => state.state.loading
     })
   },

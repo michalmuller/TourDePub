@@ -39,6 +39,7 @@ export default {
   name: "Navigation",
   methods: {
     displayPubs() {
+      this.$parent.callPubs();
       this.$store.commit("state/REMOVE_PUB");
     }
   },
