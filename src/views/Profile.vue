@@ -67,7 +67,7 @@
               </div>
             </div>
           </div>
-          <div class="overflow-scroll pb-4" style="height: calc(100vh - 192px) !important">
+          <div class="overflow-scroll pb-4" style="height: calc(100vh - 190px) !important">
             <div class="px-3 mt-5">
               <p class="text-gray-600 mb-2">Leaderboard</p>
               <div

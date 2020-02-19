@@ -29,8 +29,6 @@ const mutations = {
   },
 
   UPDATE_PUB: (state, payload) => {
-    console.log(payload)
-    console.log('aisnad')
     state.pub = payload;
   },
 
@@ -51,9 +49,10 @@ const mutations = {
   },
 
   UPDATE_CHALLENGE: (state, payload) => {
+    console.log(payload)
     state.pubs.forEach((p, i) => {
       if (p.id === state.pub.id) {
-        state.pubs[i][state.user.uid].challenge += payload
+        state.pubs[i][state.user.uid].challenge = payload
       }
     })
   },

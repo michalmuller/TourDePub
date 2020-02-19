@@ -32,7 +32,7 @@ export default {
       let pubs = [];
       this.$store.commit("state/LOADING", true);
       db.collection("pubs")
-        .orderBy("name")
+        // .orderBy("name")
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {

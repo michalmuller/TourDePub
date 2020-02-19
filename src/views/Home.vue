@@ -288,6 +288,7 @@ export default {
       this.$store.commit("state/REMOVE_PUB");
     },
     updateChallenge() {
+      console.log(this.pub[this.user.uid].challenge);
       this.$store.commit(
         "state/UPDATE_CHALLENGE",
         this.pub[this.user.uid].challenge
