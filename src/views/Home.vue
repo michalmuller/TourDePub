@@ -241,6 +241,7 @@ export default {
           storageRef.getDownloadURL().then(url => {
             console.log(url);
             this.$store.commit("state/UPDATE_IMAGES", 1);
+            const pubId = this.pub.id;
             const batch = db.batch();
             const increment = firebase.firestore.FieldValue.increment(1);
             const points = firebase.firestore.FieldValue.increment(
@@ -263,7 +264,11 @@ export default {
               })
               .then(() => {
                 setTimeout(() => {
-                  this.getPub(this.pubs[this.pub.id - 1]);
+                  this.pubs.forEach((p, i) => {
+                    if (p.id === pubId) {
+                      this.getPub(this.pubs[i]);
+                    }
+                  });
                   this.imgReload = false;
                 }, 1400);
               })

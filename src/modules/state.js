@@ -29,6 +29,8 @@ const mutations = {
   },
 
   UPDATE_PUB: (state, payload) => {
+    console.log(payload)
+    console.log('aisnad')
     state.pub = payload;
   },
 
@@ -38,14 +40,22 @@ const mutations = {
 
   UPDATE_BEER: (state, payload) => {
     state.pub[state.user.uid].beer += payload;
-    state.pubs[state.pub.id - 1][state.user.uid].beer += payload;
-    state.pubs[state.pub.id - 1].beer_total += payload;
+    state.pubs.forEach((p, i) => {
+      if (p.id === state.pub.id) {
+        state.pubs[i][state.user.uid].beer += payload
+        state.pubs[i].beer_total += payload
+      }
+    })
     state.pub.beer_total += payload;
     state.user.beer_total += payload;
   },
 
   UPDATE_CHALLENGE: (state, payload) => {
-    state.pubs[state.pub.id - 1][state.user.uid].challenge = payload
+    state.pubs.forEach((p, i) => {
+      if (p.id === state.pub.id) {
+        state.pubs[i][state.user.uid].challenge += payload
+      }
+    })
   },
 
   UPDATE_IMAGES: (state, payload) => {
