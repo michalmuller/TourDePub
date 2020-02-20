@@ -92,6 +92,23 @@
         </div>
         <div class="overflow-scroll pb-4" style="height: calc(100vh - 190px) !important">
           <div class="px-3 mt-5 relative">
+            <span class="text-md text-gray-600">Total for JBC Team</span>
+            <div class="rounded flex w-full h-12 bg-light-blue mt-2">
+              <div class="flex items-center ml-3">
+                <img class="w-3" src="../../public/img/icons/beer_color_bg_blue.svg" />
+                <span class="text-lg font-bold text-gray-800 ml-2">{{ pub.beer_total }} drinks</span>
+              </div>
+
+              <div class="flex items-center ml-6">
+                <img class="w-6" src="../../public/img/icons/img.svg" />
+                <span
+                  class="text-lg font-bold text-gray-800 ml-2"
+                >{{ pub.images ? pub.images.length: '0' }} photos</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="px-3 mt-5 relative">
             <div class="flex items-center">
               <span class="text-md text-gray-600">Challenge</span>
               <span class="text-xs ml-2 text-gray-500">({{pub.challenge_points}} points)</span>
@@ -108,25 +125,11 @@
               </div>
             </div>
           </div>
-
-          <div class="px-3 mt-5">
-            <span class="text-md text-gray-600">Total for JBC Team</span>
-            <div class="rounded flex w-full h-12 bg-light-blue mt-2">
-              <div class="flex items-center ml-3">
-                <img class="w-3" src="../../public/img/icons/beer_color_bg_blue.svg" />
-                <span class="text-lg font-bold text-gray-800 ml-2">{{ pub.beer_total }} drinks</span>
-              </div>
-
-              <div class="flex items-center ml-6">
-                <img class="w-6" src="../../public/img/icons/img.svg" />
-                <span
-                  class="text-lg font-bold text-gray-800 ml-2"
-                >{{ pub.images ? pub.images.length: '0' }} photos</span>
-              </div>
-            </div>
-          </div>
           <div class="px-3 mt-6">
-            <p class="text-gray-600 mb-2">Your contribution</p>
+            <div class="flex items-center mb-2">
+              <span class="text-gray-600">Your contribution</span>
+              <span class="text-xs ml-2 text-gray-500">(160 - 200 points)</span>
+            </div>
             <div class="rounded flex w-full h-12 bg-light-blue justify-between">
               <div
                 @click="beerUpdate(-1, -180, -220)"
@@ -151,7 +154,10 @@
           </div>
 
           <div class="px-3 mt-6">
-            <p class="text-gray-600 mb-2">Gallery</p>
+            <div class="mb-2 flex items-center">
+              <span class="text-gray-600">Gallery</span>
+              <span class="text-xs ml-2 text-gray-500">(5 - 10 points)</span>
+            </div>
             <p class="text-gray-800" v-if="imgReload">loading, have a beer ...</p>
             <p
               v-if="!pub.images && !imgReload"

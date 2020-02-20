@@ -4,28 +4,42 @@
       <form class="bg-white shadow-md rounded px-6 pt-6 pb-8 mb-4" v-on:submit.prevent="login">
         <h1 class="text-2xl font-bold text-center mb-6">{{ signUpToggle ? 'Sign Up' : 'Login' }}</h1>
         <div class="mb-4" v-show="signUpToggle">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Nickname</label>
+          <div class="flex justify-between">
+            <label class="block text-gray-700 text-sm font-bold mb-1" for="username">Nickname</label>
+            <p class="text-xs text-gray-500">{{displayName.length}}/10</p>
+          </div>
           <input
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="username"
             type="text"
             v-model="displayName"
-            placeholder="chcanka"
+            maxlength="10"
+            placeholder="stano"
           />
         </div>
-        <div class="mb-4">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Email</label>
+        <div class="mb-5">
+          <label class="block text-gray-700 text-sm font-bold mb-1" for="username">Email</label>
           <input
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="username"
             type="text"
             v-model="email"
+            @click="clearErrMsg"
             placeholder="Standa@vypil.to"
           />
+          <p
+            class="text-xs text-red pt-1"
+            v-if="loginErrMsg == 'auth/invalid-email'"
+          >email address is badly formatted</p>
+          <p
+            class="text-xs text-red pt-1"
+            v-if="loginErrMsg == 'auth/user-not-found'"
+          >no user under this email address</p>
+          <p class="text-xs text-red pt-1" v-if="userExists">the email address is already in use</p>
         </div>
-        <div class="mb-4">
+        <div class="mb-5">
           <div class="flex justify-between">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
+            <label class="block text-gray-700 text-sm font-bold mb-1" for="password">Password</label>
             <p v-show="signUpToggle" class="text-xs text-gray-500">8 char. min</p>
           </div>
           <input
@@ -34,9 +48,14 @@
             type="password"
             v-model="password"
             placeholder="**********"
+            @click="clearErrMsg"
           />
+          <p
+            class="text-xs text-red pt-1"
+            v-if="loginErrMsg == 'auth/wrong-password'"
+          >the password is invalid</p>
         </div>
-        <div class="mb-4" v-show="signUpToggle">
+        <div class="mb-5" v-show="signUpToggle">
           <checkbox v-model="terms">
             <p class="text-sm ml-2 text-gray-800">
               I agree to
@@ -80,6 +99,9 @@
       <p
         class="text-center text-gray-500 text-xs"
       >&copy; {{ year }} Michal Muller. All rights reserved.</p>
+    </div>
+    <div v-show="loginErr" class="absolute bg-red text-white bottom-0 w-full text-center">
+      <p class="py-3">Login / Sign up failed</p>
     </div>
     <div
       v-if="openTerms"
@@ -145,6 +167,9 @@ export default {
   components: { Checkbox },
   data() {
     return {
+      loginErrMsg: null,
+      loginErr: false,
+      userExists: false,
       terms: false,
       openTerms: false,
       openedTerms: false,
@@ -155,8 +180,16 @@ export default {
     };
   },
   methods: {
+    clearErrMsg() {
+      this.loginErrMsg = null;
+      this.loginErr = false;
+      this.userExists = false;
+    },
     toggle() {
       this.signUpToggle = !this.signUpToggle;
+      this.loginErrMsg = null;
+      this.loginErr = false;
+      this.userExists = false;
     },
     openTermsModal() {
       this.openTerms = true;
@@ -183,7 +216,12 @@ export default {
           this.$parent.callPubs();
         })
         .catch(err => {
-          console.log(err);
+          this.loginErr = true;
+          this.loginErrMsg = err.code;
+          if (err.code == "auth/email-already-in-use") {
+            this.userExists = true;
+          }
+          console.log("Error:", err);
         });
     },
 
@@ -212,7 +250,15 @@ export default {
                       );
                   });
                 })
-                .catch(err => console.log(err));
+                .catch(err => {
+                  this.loginErr = true;
+                  this.loginErrMsg = err.code;
+                  if (err.code == "auth/email-already-in-use") {
+                    console.log("user exists");
+                    this.userExists = true;
+                  }
+                  console.log("Error:", err);
+                });
               var user = {
                 displayName: currentUser.displayName,
                 uid: currentUser.uid,
@@ -250,6 +296,12 @@ export default {
         })
         .catch(err => {
           console.log(err);
+          this.loginErr = true;
+          this.loginErrMsg = err.code;
+          if (err.code == "auth/email-already-in-use") {
+            console.log("user exists");
+            this.userExists = true;
+          }
         });
     }
   },

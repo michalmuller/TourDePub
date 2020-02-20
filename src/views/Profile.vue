@@ -77,10 +77,10 @@
                 :class="u.displayName == user.displayName ? 'bg-medium-blue': 'bg-medium-blue'"
               >
                 <div @click="showUser(u,i)" class="flex justify-between items-center pt-2 pb-2">
-                  <div class="flex">
+                  <div class="flex items-center">
                     <span class="text-gray-600 font-bold text-xl mx-3 w-3">{{i+1}}</span>
                     <img class="rounded-full object-cover w-7 h-7 mr-2" :src="u.photoUrl" />
-                    <span class="text-gray-800 font-bold text-xl">{{u.displayName}}</span>
+                    <span class="text-gray-800 font-bold text-lg username">{{u.displayName}}</span>
                   </div>
                   <div class="flex mr-3">
                     <span class="mr-3 text-gray-600 text-sm">{{u.points_total}} p.</span>
@@ -453,5 +453,10 @@ export default {
 <style lang="scss" scoped>
 .rotate {
   transform: rotate(180deg);
+}
+.username {
+  max-width: 32vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
