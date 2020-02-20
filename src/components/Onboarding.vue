@@ -10,7 +10,7 @@
       <swiper :options="swiperOnboarding" ref="onboardingSwiper">
         <swiper-slide class="h-full w-full flex items-center justify-center">
           <div class="w-full h-full">
-            <div class="px-12 mt-12 flex justify-center">
+            <div class="px-12 mt-8 flex justify-center">
               <img
                 style="max-width:200px; max-height:220px"
                 src="../../public/img/icons/onboarding-beer.svg"
@@ -30,13 +30,13 @@
 
         <swiper-slide class="h-full w-full flex items-center justify-center">
           <div class="w-full h-full">
-            <div class="px-12 mt-16 flex justify-center">
+            <div class="px-12 mt-8 flex justify-center">
               <img
                 style="max-width:190px; max-height:220px"
                 src="../../public/img/icons/onboarding-pubs.svg"
               />
             </div>
-            <div class="mt-12 text-center">
+            <div class="mt-2 text-center">
               <p class="text-gray-800 font-bold text-2xl">Find Pubs</p>
               <div class="flex justify-center">
                 <p
@@ -50,13 +50,13 @@
 
         <swiper-slide class="h-full w-full flex items-center justify-center">
           <div class="w-full h-full">
-            <div class="px-12 mt-16 flex justify-center">
+            <div class="px-12 mt-8 flex justify-center">
               <img
                 style="max-width:190px; max-height:220px"
                 src="../../public/img/icons/onboarding-collect.svg"
               />
             </div>
-            <div class="mt-8 text-center">
+            <div class="mt-2 text-center">
               <p class="text-gray-800 font-bold text-2xl">Collect Points</p>
               <div class="flex justify-center">
                 <p
@@ -70,13 +70,13 @@
 
         <swiper-slide class="h-full w-full flex items-center justify-center">
           <div class="w-full h-full">
-            <div class="px-12 mt-16 flex justify-center">
+            <div class="px-12 mt-8 flex justify-center">
               <img
                 style="max-width:200px; max-height:220px"
                 src="../../public/img/icons/onboarding-win.svg"
               />
             </div>
-            <div class="mt-5 text-center">
+            <div class="mt-1 text-center">
               <p class="text-gray-800 font-bold text-2xl">Win the Game</p>
               <div class="flex justify-center">
                 <p
