@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute bg-gradient-primary z-50" style="width: 100vw; height: 100vh">
+  <div class="fixed bg-gradient-primary z-50" style="width: 100vw; height: 100vh">
     <div class="mt-5 relative w-full z-50 flex items-center justify-end" @click="closeOnboarding">
       <p class="px-6 font-semibold text-white">Skip</p>
     </div>
@@ -32,7 +32,7 @@
           <div class="w-full h-full">
             <div class="px-12 mt-8 flex justify-center">
               <img
-                style="max-width:190px; max-height:220px"
+                style="max-width:200px; max-height:220px"
                 src="../../public/img/icons/onboarding-pubs.svg"
               />
             </div>
@@ -52,7 +52,7 @@
           <div class="w-full h-full">
             <div class="px-12 mt-8 flex justify-center">
               <img
-                style="max-width:190px; max-height:220px"
+                style="max-width:200px; max-height:220px"
                 src="../../public/img/icons/onboarding-collect.svg"
               />
             </div>
@@ -76,7 +76,7 @@
                 src="../../public/img/icons/onboarding-win.svg"
               />
             </div>
-            <div class="mt-1 text-center">
+            <div class="mt-2 text-center">
               <p class="text-gray-800 font-bold text-2xl">Win the Game</p>
               <div class="flex justify-center">
                 <p
@@ -90,7 +90,7 @@
 
         <swiper-slide class="h-full w-full flex items-center justify-center">
           <div class="w-full h-full">
-            <div class="px-12 mt-12 flex justify-center">
+            <div class="px-12 mt-8 flex justify-center">
               <img
                 style="max-width:200px; max-height:220px"
                 src="../../public/img/icons/onboarding-beer.svg"
