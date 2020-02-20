@@ -276,6 +276,7 @@ export default {
                   quizes_total: 0,
                   points_total: 0,
                   challenges_total: 0,
+                  onboarding: true,
                   role: "user",
                   displayName: currentUser.displayName,
                   uid: currentUser.uid,

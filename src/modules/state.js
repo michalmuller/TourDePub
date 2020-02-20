@@ -65,6 +65,10 @@ const mutations = {
     state.users = payload;
   },
 
+  ONBOARDING_DONE: state => {
+    state.user.onboarding = false
+  },
+
   CHANGE_AVATAR: (state, payload) => {
     state.user.photoUrl = payload.url;
     state.users[payload.i].photoUrl = payload.url;

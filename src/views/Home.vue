@@ -181,6 +181,7 @@
     </div>
     <modal :index="currentImage" :images="pub.images" v-if="imageModal"></modal>
     <map-modal :pubs="pubs" v-if="mapModal"></map-modal>
+    <onboarding v-if="user.onboarding"></onboarding>
   </div>
 </template>
 
@@ -194,10 +195,11 @@ import db from "@/firebase/firebaseInit";
 import Modal from "../components/Modal";
 import MapModal from "../components/MapModal";
 import Checkbox from "../components/Checkbox.vue";
+import Onboarding from "../components/Onboarding.vue";
 
 export default {
   name: "home",
-  components: { Modal, MapModal, Checkbox },
+  components: { Modal, MapModal, Checkbox, Onboarding },
   data() {
     return {
       mapModal: false,
