@@ -113,12 +113,14 @@
               <span class="text-md text-gray-600">Challenge</span>
               <span class="text-xs ml-2 text-gray-500">({{pub.challenge_points}} points)</span>
             </div>
-            <img
-              v-show="pub[user.uid].challenge"
-              class="absolute right-0 top-0 mt-2 h-6 mr-5"
-              src="../../public/img/icons/challenge.svg"
-            />
-            <div class="rounded flex w-full py-3 bg-light-blue mt-2">
+            <transition name="challenge">
+              <img
+                v-show="pub[user.uid].challenge"
+                class="absolute right-0 top-0 mt-2 h-6 mr-5"
+                src="../../public/img/icons/challenge.svg"
+              />
+            </transition>
+            <div class="rounded flex w-full py-3 bg-light-blue relative z-10 mt-2">
               <div class="flex ml-3">
                 <checkbox v-model="pub[user.uid].challenge" @change="updateChallenge"></checkbox>
                 <span class="font-bold text-sm text-gray-800 ml-2">{{pub.challenge}}</span>
@@ -294,7 +296,6 @@ export default {
       this.$store.commit("state/REMOVE_PUB");
     },
     updateChallenge() {
-      console.log(this.pub[this.user.uid].challenge);
       this.$store.commit(
         "state/UPDATE_CHALLENGE",
         this.pub[this.user.uid].challenge
@@ -389,5 +390,18 @@ progress[value]::-webkit-progress-bar {
 
 progress[value]::-webkit-progress-value {
   background-color: #71e769;
+}
+
+.challenge-enter,
+.challenge-leave-to {
+  transform: rotate(90deg);
+  top: 30px !important;
+  margin-right: 0;
+  opacity: 0;
+}
+
+.challenge-enter-active,
+.challenge-leave-active {
+  transition: all 0.35s;
 }
 </style>

@@ -382,7 +382,10 @@ export default {
           .update({
             [this.firebaseUid]: firebase.firestore.FieldValue.delete()
           })
-          .then(() => console.log("user deleted from pubs"));
+          .then(() => {
+            this.firebaseUid = "";
+            console.log("user deleted from pubs");
+          });
       });
       db.collection("users")
         .doc(this.firebaseUid.toString())
