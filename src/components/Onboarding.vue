@@ -11,7 +11,10 @@
         <swiper-slide class="h-full w-full flex items-center justify-center">
           <div class="w-full h-full">
             <div class="px-12 mt-12 flex justify-center">
-              <img style="max-width:200px" src="../../public/img/icons/onboarding-beer.svg" />
+              <img
+                style="max-width:200px; max-height:220px"
+                src="../../public/img/icons/onboarding-beer.svg"
+              />
             </div>
             <div class="mt-2 text-center">
               <p class="text-gray-800 font-bold text-2xl">Tour De Pub</p>
@@ -28,9 +31,12 @@
         <swiper-slide class="h-full w-full flex items-center justify-center">
           <div class="w-full h-full">
             <div class="px-12 mt-16 flex justify-center">
-              <img style="max-width:190px" src="../../public/img/icons/onboarding-pubs.svg" />
+              <img
+                style="max-width:190px; max-height:220px"
+                src="../../public/img/icons/onboarding-pubs.svg"
+              />
             </div>
-            <div class="mt-16 text-center">
+            <div class="mt-12 text-center">
               <p class="text-gray-800 font-bold text-2xl">Find Pubs</p>
               <div class="flex justify-center">
                 <p
@@ -45,7 +51,10 @@
         <swiper-slide class="h-full w-full flex items-center justify-center">
           <div class="w-full h-full">
             <div class="px-12 mt-16 flex justify-center">
-              <img style="max-width:190px" src="../../public/img/icons/onboarding-collect.svg" />
+              <img
+                style="max-width:190px; max-height:220px"
+                src="../../public/img/icons/onboarding-collect.svg"
+              />
             </div>
             <div class="mt-8 text-center">
               <p class="text-gray-800 font-bold text-2xl">Collect Points</p>
@@ -62,7 +71,10 @@
         <swiper-slide class="h-full w-full flex items-center justify-center">
           <div class="w-full h-full">
             <div class="px-12 mt-16 flex justify-center">
-              <img style="max-width:200px" src="../../public/img/icons/onboarding-win.svg" />
+              <img
+                style="max-width:200px; max-height:220px"
+                src="../../public/img/icons/onboarding-win.svg"
+              />
             </div>
             <div class="mt-5 text-center">
               <p class="text-gray-800 font-bold text-2xl">Win the Game</p>
@@ -79,7 +91,10 @@
         <swiper-slide class="h-full w-full flex items-center justify-center">
           <div class="w-full h-full">
             <div class="px-12 mt-12 flex justify-center">
-              <img style="max-width:200px" src="../../public/img/icons/onboarding-beer.svg" />
+              <img
+                style="max-width:200px; max-height:220px"
+                src="../../public/img/icons/onboarding-beer.svg"
+              />
             </div>
             <div class="mt-2 text-center">
               <button
