@@ -4,6 +4,7 @@ const state = {
   pub: null,
   user: null,
   users: null,
+  points: '23',
 };
 
 const mutations = {
@@ -49,7 +50,6 @@ const mutations = {
   },
 
   UPDATE_CHALLENGE: (state, payload) => {
-    console.log(payload)
     state.pubs.forEach((p, i) => {
       if (p.id === state.pub.id) {
         state.pubs[i][state.user.uid].challenge = payload
@@ -64,6 +64,11 @@ const mutations = {
   UPDATE_USERS: (state, payload) => {
     state.users = payload;
   },
+
+  UPDATE_POINTS: (state, payload) => {
+    state.points = payload
+  },
+
 
   ONBOARDING_DONE: state => {
     state.user.onboarding = false

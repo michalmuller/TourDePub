@@ -29,14 +29,17 @@
           <p class="text-xs">profile</p>
         </router-link>
       </div>
+      <flash-points></flash-points>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import FlashPoints from "./FlashPoints.vue";
 export default {
   name: "Navigation",
+  components: { FlashPoints },
   methods: {
     displayPubs() {
       this.$parent.callPubs();

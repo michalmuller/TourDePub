@@ -254,9 +254,9 @@ export default {
             const pubId = this.pub.id;
             const batch = db.batch();
             const increment = firebase.firestore.FieldValue.increment(1);
-            const points = firebase.firestore.FieldValue.increment(
-              this.countPoints(5, 10)
-            );
+            const _points = this.countPoints(5, 10);
+            this.$store.commit("state/UPDATE_POINTS", _points);
+            const points = firebase.firestore.FieldValue.increment(_points);
             const pubRef = db.collection("pubs").doc(this.pub.id.toString());
             const userRef = db
               .collection("users")
@@ -309,6 +309,7 @@ export default {
       const points = this.pub[this.user.uid].challenge
         ? this.pub.challenge_points
         : -this.pub.challenge_points;
+      this.$store.commit("state/UPDATE_POINTS", points);
       const increment = firebase.firestore.FieldValue.increment(points);
       const count = firebase.firestore.FieldValue.increment(val);
       batch.update(dbRef, {
@@ -328,9 +329,9 @@ export default {
     beerUpdate(val, min, max) {
       this.$store.commit("state/UPDATE_BEER", val);
       const increment = firebase.firestore.FieldValue.increment(val);
-      const points = firebase.firestore.FieldValue.increment(
-        this.countPoints(min, max)
-      );
+      const _points = this.countPoints(min, max);
+      const points = firebase.firestore.FieldValue.increment(_points);
+      this.$store.commit("state/UPDATE_POINTS", _points);
       const batch = db.batch();
       const dbRef = db.collection("pubs").doc(this.pub.id.toString());
       const userRef = db.collection("users").doc(this.user.uid.toString());
