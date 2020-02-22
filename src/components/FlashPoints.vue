@@ -1,7 +1,7 @@
 <template>
   <transition class="flash absolute" name="flash">
-    <div v-show="flashPoints" class="absolute right-0 mr-1">
-      <p class="text-xs text-gray-600 mr-5">{{points}}</p>
+    <div v-show="flashPoints" class="absolute points">
+      <p class="text-xs text-gray-600">{{points}}</p>
     </div>
   </transition>
 </template>
@@ -35,6 +35,10 @@ export default {
 <style lang="scss" >
 .flash {
   top: 50px;
+}
+
+.points {
+  right: 6%;
 }
 
 .flash-enter {
