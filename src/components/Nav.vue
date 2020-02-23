@@ -1,7 +1,7 @@
 <template>
   <div class="fixed z-20 bottom-0 w-full shadow-top">
     <div id="nav" class="bg-white flex justify-around items-center pb-1">
-      <div>
+      <div style="flex: 1">
         <router-link to="/quiz" class="nav-icon pt-2 flex items-center flex-col">
           <div class="w-12 h-7 flex items-center justify-center">
             <img class="h-7" src="../../public/img/icons/question.svg" />
@@ -9,7 +9,7 @@
           <p class="text-xs">quiz</p>
         </router-link>
       </div>
-      <div>
+      <div style="flex: 1">
         <router-link
           to="/"
           @click.native="displayPubs"
@@ -21,7 +21,15 @@
           <p class="text-xs">tour</p>
         </router-link>
       </div>
-      <div>
+      <div style="flex: 1">
+        <router-link to="/leaderboard" class="nav-icon pt-2 flex items-center flex-col">
+          <div class="w-12 h-7 flex items-center justify-center">
+            <img class="h-8" src="../../public/img/icons/leaderboard.svg" />
+          </div>
+          <p class="text-xs">leaderboard</p>
+        </router-link>
+      </div>
+      <div style="flex: 1">
         <router-link to="/profile" class="nav-icon pt-2 flex items-center flex-col">
           <div class="w-12 h-7 flex items-center justify-center">
             <img class="h-7" src="../../public/img/icons/profile.svg" />

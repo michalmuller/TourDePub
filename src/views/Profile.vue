@@ -68,53 +68,7 @@
             </div>
           </div>
           <div class="overflow-scroll pb-4" style="height: calc(100vh - 190px) !important">
-            <div class="px-3 mt-5">
-              <p class="text-gray-600 mb-2">Leaderboard</p>
-              <div
-                v-for="(u, i) in users"
-                :key="i"
-                class="rounded flex w-full flex-col mb-1"
-                :class="u.displayName == user.displayName ? 'bg-medium-blue': 'bg-medium-blue'"
-              >
-                <div @click="showUser(u,i)" class="flex justify-between items-center pt-2 pb-2">
-                  <div class="flex items-center">
-                    <span class="text-gray-600 font-bold text-xl mx-3 w-3">{{i+1}}</span>
-                    <img class="rounded-full object-cover w-7 h-7 mr-2" :src="u.photoUrl" />
-                    <span class="text-gray-800 font-bold text-lg username">{{u.displayName}}</span>
-                  </div>
-                  <div class="flex mr-3">
-                    <span class="mr-3 text-gray-600 text-sm">{{u.points_total}} p.</span>
-                    <img
-                      :class="{'rotate': showUserIndex == i}"
-                      src="../../public/img/icons/arrow_leaderboard.svg"
-                    />
-                  </div>
-                </div>
-                <div
-                  v-if="showUserIndex == i"
-                  class="flex justify-end mx-3 py-2 border-t border-white"
-                >
-                  <div class="flex items-center mr-5">
-                    <span class="text-gray-700 font-bold text-xl mr-2">{{u.challenges_total}}</span>
-                    <img class="h-5" src="../../public/img/icons/challenge.svg" />
-                  </div>
-                  <div class="flex items-center mr-6">
-                    <span class="text-gray-700 font-bold text-xl mr-2">{{u.quizes_total}}</span>
-                    <img class="h-5" src="../../public/img/icons/quiz.svg" />
-                  </div>
-                  <div class="flex items-center mr-6">
-                    <span class="text-gray-700 font-bold text-xl mr-2">{{u.img_total}}</span>
-                    <img class="h-5" src="../../public/img/icons/img.svg" />
-                  </div>
-                  <div class="flex items-center">
-                    <span class="text-gray-700 font-bold text-xl mr-2">{{u.beer_total}}</span>
-                    <img class="w-3" src="../../public/img/icons/beer_color_bg_blue.svg" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- <div class="px-3 mt-6">
+            <!-- <div class="px-3 mt-5">
               <p class="text-gray-600 mb-2">Another section</p>
             </div>-->
 

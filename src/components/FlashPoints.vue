@@ -33,12 +33,8 @@ export default {
 </script>
 
 <style lang="scss" >
-.flash {
-  top: 50px;
-}
-
 .points {
-  right: 6%;
+  right: 2%;
 }
 
 .flash-enter {

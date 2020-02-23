@@ -22,7 +22,7 @@
         <div class="pt-8 ml-3" v-show="loading">loading ...</div>
 
         <div v-if="!loading" class="pb-3 pt-4 flex justify-center items-center text-center w-full">
-          <p class="text-gray-800 text-2xl font-bold">JBC Team</p>
+          <p class="text-gray-800 text-2xl font-bold">Pubs</p>
         </div>
         <div class="overflow-scroll pb-4 pt-2 px-3" style="height: calc(100vh - 184px) !important">
           <div

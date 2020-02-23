@@ -4,6 +4,7 @@ import Home from './views/Home.vue';
 import Login from './views/Login.vue';
 import Quiz from './views/Quiz.vue';
 import Profile from './views/Profile.vue';
+import Leaderboard from './views/Leaderboard.vue';
 import CameraView from '@/components/CameraView';
 
 Vue.use(Router);
@@ -36,6 +37,11 @@ export default new Router({
       path: '/profile',
       name: 'profile',
       component: Profile,
+    },
+    {
+      path: '/leaderboard',
+      name: 'leaderboard',
+      component: Leaderboard,
     },
     {
       path: '/camera',

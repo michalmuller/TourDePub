@@ -57,6 +57,10 @@
         <img class="flip" src="../../public/img/icons/thumb.svg" />
         <p class="text-center mt-6 text-white text-lg">Sooo wrong!</p>
         <p class="text-2xl text-center font-semibold text-white">{{points}} points</p>
+        <div class="bg-white mt-3 py-2 px-3 text-center">
+          <p class="text-red">the correct answer is:</p>
+          <p class="text-red text-lg font-semibold">{{this.correctAnswer.answer}}</p>
+        </div>
       </div>
 
       <div
@@ -160,8 +164,10 @@ export default {
         setTimeout(() => {
           modal.classList.add("modal");
           modalWrong.classList.add("modal-box");
-          this.newQuiz();
-        }, 1600);
+          setTimeout(() => {
+            this.newQuiz();
+          }, 400);
+        }, 3000);
       }
     }
   },
@@ -172,6 +178,9 @@ export default {
     }),
     swiper() {
       return this.$refs.swiper.swiper;
+    },
+    correctAnswer() {
+      return this.quiz.answers.find(a => a.correct === true);
     }
   },
   created() {
