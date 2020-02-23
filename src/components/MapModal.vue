@@ -65,6 +65,7 @@ export default {
       this.$parent.getPub(pub);
     },
     closeModal() {
+      this.$store.commit("state/CLOSE_MAP");
       this.$parent.mapModal = false;
     }
   },

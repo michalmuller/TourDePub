@@ -119,7 +119,6 @@ export default {
       const modalWrong = this.$refs.modalWrong;
       const batch = db.batch();
       const userRef = db.collection("users").doc(this.user.uid.toString());
-
       this.answeredQuizes.push(this.quiz);
 
       if (this.quiz.answers[this.activeIndex].correct) {
@@ -146,7 +145,7 @@ export default {
         }, 1600);
       } else {
         const decrement = firebase.firestore.FieldValue.increment(-1);
-        const p = this.countPoints(-20, -40);
+        const p = this.countPoints(-15, -30);
         this.points = p;
         const points = firebase.firestore.FieldValue.increment(p);
         modal.classList.remove("modal");

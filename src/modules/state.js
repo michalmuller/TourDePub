@@ -4,7 +4,8 @@ const state = {
   pub: null,
   user: null,
   users: null,
-  points: '23',
+  points: '',
+  mapActive: false,
 };
 
 const mutations = {
@@ -47,6 +48,14 @@ const mutations = {
     })
     state.pub.beer_total += payload;
     state.user.beer_total += payload;
+  },
+
+  ACTIVATE_MAP: state => {
+    state.mapActive = true;
+  },
+
+  CLOSE_MAP: state => {
+    state.mapActive = false
   },
 
   UPDATE_CHALLENGE: (state, payload) => {

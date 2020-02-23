@@ -52,6 +52,7 @@ export default {
     displayPubs() {
       this.$parent.callPubs();
       this.$store.commit("state/REMOVE_PUB");
+      this.$store.commit("state/CLOSE_MAP");
     }
   },
   computed: {

@@ -130,11 +130,11 @@
           <div class="px-3 mt-6">
             <div class="flex items-center mb-2">
               <span class="text-gray-600">Your contribution</span>
-              <span class="text-xs ml-2 text-gray-500">(160 - 200 points)</span>
+              <span class="text-xs ml-2 text-gray-500">(175 - 200 points)</span>
             </div>
             <div class="rounded flex w-full h-12 bg-light-blue justify-between">
               <div
-                @click="beerUpdate(-1, -180, -220)"
+                @click="beerUpdate(-1, -175, -210)"
                 class="bg-blue rounded-l flex justify-center items-center w-12 h-12"
               >
                 <img src="../../public/img/icons/minus.svg" />
@@ -147,7 +147,7 @@
                 >{{ pub[user.uid].beer }} drinks</span>
               </div>
               <div
-                @click="beerUpdate(1, 160, 200)"
+                @click="beerUpdate(1, 175, 200)"
                 class="bg-blue rounded-r flex justify-center items-center w-12 h-12"
               >
                 <img src="../../public/img/icons/plus.svg" />
@@ -213,6 +213,7 @@ export default {
   methods: {
     showMap() {
       this.mapModal = true;
+      this.$store.commit("state/ACTIVATE_MAP");
     },
     showImageModal(index) {
       this.currentImage = index;
@@ -295,6 +296,9 @@ export default {
     },
 
     removePub() {
+      if (this.mapActive) {
+        this.showMap();
+      }
       this.$store.commit("state/REMOVE_PUB");
     },
     updateChallenge() {
@@ -355,7 +359,8 @@ export default {
       user: state => state.state.user,
       pubs: state => state.state.pubs,
       pub: state => state.state.pub,
-      loading: state => state.state.loading
+      loading: state => state.state.loading,
+      mapActive: state => state.state.mapActive
     })
   }
 };
