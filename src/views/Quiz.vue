@@ -88,7 +88,8 @@ export default {
       answeredQuizes: [],
       quizes: [],
       quiz: null,
-      activeIndex: ""
+      activeIndex: "",
+      correctAnswer: ""
     };
   },
   methods: {
@@ -174,12 +175,11 @@ export default {
     ...mapState({
       user: state => state.state.user,
       loading: state => state.state.loading
-    }),
-    swiper() {
-      return this.$refs.swiper.swiper;
-    },
-    correctAnswer() {
-      return this.quiz.answers.find(a => a.correct === true);
+    })
+  },
+  watch: {
+    quiz() {
+      this.correctAnswer = this.quiz.answers.find(a => a.correct === true);
     }
   },
   created() {
@@ -195,9 +195,10 @@ export default {
       })
       .then(() => {
         console.log("DB called for quizes");
-        this.$store.commit("state/LOADING", false);
         this.quizes = quizes;
         this.quiz = quizes[Math.floor(Math.random() * quizes.length)];
+        this.correctAnswer = this.quiz.answers.find(a => a.correct === true);
+        this.$store.commit("state/LOADING", false);
       })
       .catch(err => console.log(err));
   }
