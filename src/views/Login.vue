@@ -216,12 +216,15 @@ export default {
           this.$parent.callPubs();
         })
         .catch(err => {
+          if (this.signUpToggle) {
+            return;
+          }
           this.loginErr = true;
           this.loginErrMsg = err.code;
           if (err.code == "auth/email-already-in-use") {
             this.userExists = true;
           }
-          console.log("Error:", err);
+          console.log("Error from login:", err);
         });
     },
 
@@ -257,7 +260,7 @@ export default {
                     console.log("user exists");
                     this.userExists = true;
                   }
-                  console.log("Error:", err);
+                  console.log("Error sign up:", err);
                 });
               var user = {
                 displayName: currentUser.displayName,

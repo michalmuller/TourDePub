@@ -68,9 +68,27 @@
             </div>
           </div>
           <div class="overflow-scroll pb-4" style="height: calc(100vh - 190px) !important">
-            <!-- <div class="px-3 mt-5">
-              <p class="text-gray-600 mb-2">Another section</p>
-            </div>-->
+            <div class="px-3 mt-5">
+              <p class="text-gray-600 mb-2">Your stats</p>
+              <div class="rounded flex justify-around w-full bg-medium-blue px-3 py-2">
+                <div class="flex items-center mr-5">
+                  <span class="text-gray-700 font-bold text-xl mr-2">{{user.challenges_total}}</span>
+                  <img class="h-5" src="../../public/img/icons/challenge.svg" />
+                </div>
+                <div class="flex items-center mr-6">
+                  <span class="text-gray-700 font-bold text-xl mr-2">{{user.quizes_total}}</span>
+                  <img class="h-5" src="../../public/img/icons/quiz.svg" />
+                </div>
+                <div class="flex items-center mr-6">
+                  <span class="text-gray-700 font-bold text-xl mr-2">{{user.img_total}}</span>
+                  <img class="h-5" src="../../public/img/icons/img.svg" />
+                </div>
+                <div class="flex items-center">
+                  <span class="text-gray-700 font-bold text-xl mr-2">{{user.beer_total}}</span>
+                  <img class="w-3" src="../../public/img/icons/beer_color_bg_blue.svg" />
+                </div>
+              </div>
+            </div>
 
             <div class="px-3 mt-6" v-if="user.role == 'admin'">
               <p class="text-gray-600 mb-2">Admin</p>
@@ -78,7 +96,7 @@
                 <p class="ml-3 text-gray-600">Delete user from DB</p>
               </checkbox>
               <div class="mt-2 mb-6" v-show="showDeleteUser">
-                <div class="flex">
+                <!-- <div class="flex">
                   <input
                     class="w-full border rounded py-1 px-3 mr-3"
                     type="text"
@@ -90,6 +108,15 @@
                     type="submit"
                     @click="deleteUser"
                   >delete</button>
+                </div>-->
+                <div
+                  v-for="(u, i) in users"
+                  :key="i"
+                  class="rounded flex w-full bg-medium-blue items-center px-3 py-2 mb-2"
+                  @click="deleteUser(u)"
+                >
+                  <img class="h-7 rounded-full" :src="u.photoUrl" />
+                  <p class="ml-3 font-semibold text-gray-800">{{u.displayName}}</p>
                 </div>
               </div>
               <checkbox class="mt-2" v-model="showCreateQuiz">
@@ -329,20 +356,22 @@ export default {
         this.showUserIndex = i;
       }
     },
-    deleteUser() {
+    deleteUser(user) {
       this.pubs.map(pub => {
         let dbRef = db.collection("pubs").doc(pub.id.toString());
+        let points = pub[user.uid].beer;
+        let decrement = firebase.firestore.FieldValue.increment(-points);
         let removeCurrentUserId = dbRef
           .update({
-            [this.firebaseUid]: firebase.firestore.FieldValue.delete()
+            [user.uid]: firebase.firestore.FieldValue.delete(),
+            beer_total: decrement
           })
           .then(() => {
-            this.firebaseUid = "";
             console.log("user deleted from pubs");
           });
       });
       db.collection("users")
-        .doc(this.firebaseUid.toString())
+        .doc(user.uid.toString())
         .delete()
         .then(() => console.log("user deleted"))
         .catch(err => console.log(err));
