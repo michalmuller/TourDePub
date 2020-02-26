@@ -82,7 +82,7 @@
                 <p
                   class="text-gray-600 px-6 pt-2"
                   style="max-width:270px"
-                >Leaderboard in your profile displays your overall score. Stay on top of the game and show your mates how winning is done.</p>
+                >Leaderboard shows your score. Stay on top of the game and show your teammates how winning is done.</p>
               </div>
             </div>
           </div>

@@ -134,7 +134,7 @@
             </div>
             <div class="rounded flex w-full h-12 bg-light-blue justify-between">
               <div
-                @click="beerUpdate(-1, -175, -210)"
+                @click="beerUpdate(-1, -180, -210)"
                 class="bg-blue rounded-l flex justify-center items-center w-12 h-12"
               >
                 <img src="../../public/img/icons/minus.svg" />

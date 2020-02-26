@@ -96,19 +96,6 @@
                 <p class="ml-3 text-gray-600">Delete user from DB</p>
               </checkbox>
               <div class="mt-2 mb-6" v-show="showDeleteUser">
-                <!-- <div class="flex">
-                  <input
-                    class="w-full border rounded py-1 px-3 mr-3"
-                    type="text"
-                    v-model="firebaseUid"
-                    placeholder="RiiEpdGjcYq3gpd0F2"
-                  />
-                  <button
-                    class="bg-blue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    type="submit"
-                    @click="deleteUser"
-                  >delete</button>
-                </div>-->
                 <div
                   v-for="(u, i) in users"
                   :key="i"
@@ -119,6 +106,22 @@
                   <p class="ml-3 font-semibold text-gray-800">{{u.displayName}}</p>
                 </div>
               </div>
+
+              <checkbox class="mt-2" v-model="showSerializeUser">
+                <p class="ml-3 text-gray-600">Serialize user scores</p>
+              </checkbox>
+              <div class="mt-2 mb-6" v-show="showSerializeUser">
+                <div
+                  v-for="(u, i) in users"
+                  :key="i"
+                  class="rounded flex w-full bg-medium-blue items-center px-3 py-2 mb-2"
+                  @click="serializeUser(u)"
+                >
+                  <img class="h-7 rounded-full" :src="u.photoUrl" />
+                  <p class="ml-3 font-semibold text-gray-800">{{u.displayName}}</p>
+                </div>
+              </div>
+
               <checkbox class="mt-2" v-model="showCreateQuiz">
                 <p class="ml-3 text-gray-600">Create new quiz</p>
               </checkbox>
@@ -237,6 +240,7 @@ export default {
       showDeleteUser: false,
       showCreateQuiz: false,
       showCreatePub: false,
+      showSerializeUser: false,
       question: "",
       correctAnswer: "",
       falseAnswer1: "",
@@ -359,11 +363,37 @@ export default {
     deleteUser(user) {
       this.pubs.map(pub => {
         let dbRef = db.collection("pubs").doc(pub.id.toString());
+        if (pub[user.uid]) {
+          let points = pub[user.uid].beer;
+          let decrement = firebase.firestore.FieldValue.increment(-points);
+          let removeCurrentUserId = dbRef
+            .update({
+              [user.uid]: firebase.firestore.FieldValue.delete(),
+              beer_total: decrement
+            })
+            .then(() => {
+              console.log("user deleted from pubs");
+            });
+        }
+      });
+      db.collection("users")
+        .doc(user.uid.toString())
+        .delete()
+        .then(() => {
+          this.$router.replace("home");
+          console.log("user deleted");
+        })
+        .catch(err => console.log(err));
+    },
+
+    serializeUser(user) {
+      this.pubs.map(pub => {
+        let dbRef = db.collection("pubs").doc(pub.id.toString());
         let points = pub[user.uid].beer;
         let decrement = firebase.firestore.FieldValue.increment(-points);
         let removeCurrentUserId = dbRef
           .update({
-            [user.uid]: firebase.firestore.FieldValue.delete(),
+            [user.uid]: { beer: 0, challenge: false },
             beer_total: decrement
           })
           .then(() => {
@@ -372,10 +402,20 @@ export default {
       });
       db.collection("users")
         .doc(user.uid.toString())
-        .delete()
-        .then(() => console.log("user deleted"))
+        .update({
+          beer_total: 0,
+          challenges_total: 0,
+          img_total: 0,
+          points_total: 0,
+          quizes_total: 0
+        })
+        .then(() => {
+          this.$router.replace("home");
+          console.log("user serialized");
+        })
         .catch(err => console.log(err));
     },
+
     changeAvatar(avatar) {
       let index = this.users.findIndex(
         u => u.displayName === this.user.displayName
